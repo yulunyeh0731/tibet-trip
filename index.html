@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西藏12日 · 交通與海拔全覽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1B33;
+    --bg-panel:#16213D;
+    --bg-panel-2:#1C2A4A;
+    --ink:#EDEFEA;
+    --ink-dim:#96A2C2;
+    --gold:#C9A24B;
+    --maroon:#B14550;
+    --teal:#3E9C86;
+    --line: rgba(237,239,234,0.10);
+    --line-strong: rgba(237,239,234,0.18);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold);color:#12172A;}
+
+  a{color:var(--gold);}
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:56px 20px 36px;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-inner{max-width:760px;margin:0 auto;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-optical-sizing:auto;
+    font-size:clamp(32px,7vw,46px);
+    line-height:1.08;
+    margin:0 0 12px;
+    letter-spacing:-0.01em;
+  }
+  .hero p.sub{
+    color:var(--ink-dim);
+    font-size:15px;
+    max-width:48ch;
+    margin:0 0 34px;
+  }
+
+  /* ---------- ELEVATION CHART ---------- */
+  .chart-card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px 18px 10px;
+  }
+  .chart-title{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 6px;
+  }
+  svg{display:block;width:100%;height:auto;overflow:visible;}
+  .peak-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    fill:var(--ink);
+  }
+  .peak-alt{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    fill:var(--gold);
+  }
+  .axis-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    fill:var(--ink-dim);
+  }
+  .elev-line{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;}
+  .elev-fill{fill:url(#g-fill);}
+  .elev-dot{fill:var(--bg-panel);stroke:var(--gold);stroke-width:2;}
+  .elev-dot.peak{fill:var(--maroon);stroke:var(--maroon);}
+
+  .chart-note{
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin:14px 2px 4px;
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  section.block{margin-top:52px;}
+  .block-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .block-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:22px;
+    margin:0;
+  }
+  .block-head .count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink-dim);
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{position:relative;}
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:29px;
+    top:6px;
+    bottom:6px;
+    width:1px;
+    background:var(--line-strong);
+  }
+  .leg{
+    position:relative;
+    padding-left:64px;
+    padding-bottom:22px;
+  }
+  .leg:last-child{padding-bottom:0;}
+  .leg-dot{
+    position:absolute;
+    left:22px;
+    top:4px;
+    width:15px;height:15px;
+    border-radius:50%;
+    background:var(--bg-panel);
+    border:2px solid var(--ink-dim);
+    z-index:1;
+  }
+  .leg.confirmed .leg-dot{border-color:var(--teal);}
+  .leg.pending .leg-dot{border-color:var(--maroon);background:var(--maroon);}
+  .leg.handoff .leg-dot{border-color:var(--gold);background:var(--gold);}
+
+  .leg-card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+  }
+  .leg-date{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-dim);
+    letter-spacing:.04em;
+    margin-bottom:4px;
+  }
+  .leg-title{
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .leg-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 14px;
+    align-items:center;
+  }
+  .leg-detail{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--ink-dim);
+  }
+  .leg-detail b{color:var(--ink);font-weight:500;}
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.05em;
+    padding:3px 9px 3px 8px;
+    border-radius:999px;
+    text-transform:uppercase;
+    margin-left:auto;
+  }
+  .pill.confirmed{background:rgba(62,156,134,0.14);color:var(--teal);}
+  .pill.pending{background:rgba(177,69,80,0.16);color:#E38A92;}
+  .pill.handoff{background:rgba(201,162,75,0.16);color:var(--gold);}
+
+  .leg-sub{
+    margin-top:8px;
+    padding-top:8px;
+    border-top:1px dashed var(--line);
+    font-size:12.5px;
+    color:var(--ink-dim);
+  }
+  .leg-sub b{color:var(--ink);font-weight:500;}
+
+  /* ---------- PENDING ---------- */
+  .todo{
+    background:var(--bg-panel);
+    border:1px solid rgba(177,69,80,0.35);
+    border-left:3px solid var(--maroon);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .todo:last-child{margin-bottom:0;}
+  .todo-title{font-weight:600;font-size:14.5px;margin-bottom:4px;}
+  .todo-note{font-size:13px;color:var(--ink-dim);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:64px;
+    padding-top:22px;
+    border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  @media (max-width:480px){
+    .hero{padding:44px 16px 28px;}
+    .wrap{padding:0 16px 60px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">May × YuLun · 2026.08.25 – 09.08</p>
+    <h1>西藏12日<br>交通與海拔全覽</h1>
+    <p class="sub">從成都平原到珠峰大本營，再回到海平面——這趟旅程真正的主線是海拔的起伏。以下依實際出票與訂房文件整理每一段交通的銜接與狀態。</p>
+
+    <div class="chart-card">
+      <p class="chart-title">海拔曲線 · Elevation Profile</p>
+      <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="g-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C9A24B" stop-opacity="0.30"/>
+            <stop offset="100%" stop-color="#C9A24B" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- baseline -->
+        <line x1="20" y1="260" x2="980" y2="260" stroke="var(--line-strong)" stroke-width="1"/>
+
+        <!-- area fill -->
+        <path class="elev-fill" d="M20,237 L88.6,237 L157,121 L226,121 L294,92 L363,92 L431,92 L500,83 L569,20 L637,83 L706,92 L774,42 L843,85 L911,237 L980,258 L980,260 L20,260 Z"/>
+
+        <!-- line -->
+        <path class="elev-line" d="M20,237 L88.6,237 L157,121 L226,121 L294,92 L363,92 L431,92 L500,83 L569,20 L637,83 L706,92 L774,42 L843,85 L911,237 L980,258"/>
+
+        <!-- key points -->
+        <circle class="elev-dot" cx="20" cy="237" r="4"/>
+        <circle class="elev-dot" cx="157" cy="121" r="4"/>
+        <circle class="elev-dot" cx="294" cy="92" r="4"/>
+        <circle class="elev-dot peak" cx="569" cy="20" r="5"/>
+        <circle class="elev-dot" cx="774" cy="42" r="4"/>
+        <circle class="elev-dot" cx="911" cy="237" r="4"/>
+
+        <!-- peak label -->
+        <text class="peak-label" x="569" y="12" text-anchor="middle">珠峰大本營</text>
+        <text class="peak-alt" x="569" y="0" text-anchor="middle" style="display:none"></text>
+
+        <!-- date axis -->
+        <text class="axis-label" x="20" y="278" text-anchor="start">8/25 成都</text>
+        <text class="axis-label" x="157" y="278" text-anchor="middle">8/27 林芝</text>
+        <text class="axis-label" x="294" y="278" text-anchor="middle">8/29 拉薩</text>
+        <text class="axis-label" x="569" y="278" text-anchor="middle">9/2 EBC</text>
+        <text class="axis-label" x="774" y="278" text-anchor="middle">9/5 納木措</text>
+        <text class="axis-label" x="911" y="278" text-anchor="end">9/7 返成都</text>
+
+        <!-- altitude figures under key dots -->
+        <text class="axis-label" x="20" y="252" text-anchor="start" fill="var(--ink-dim)">500m</text>
+        <text class="axis-label" x="157" y="136" text-anchor="middle" fill="var(--ink-dim)">3,000m</text>
+        <text class="axis-label" x="294" y="107" text-anchor="middle" fill="var(--ink-dim)">3,650m</text>
+        <text class="axis-label" x="569" y="35" text-anchor="middle" fill="var(--gold)">5,200m</text>
+        <text class="axis-label" x="774" y="57" text-anchor="middle" fill="var(--ink-dim)">4,718m</text>
+        <text class="axis-label" x="911" y="252" text-anchor="end" fill="var(--ink-dim)">500m</text>
+      </svg>
+      <p class="chart-note">珠峰大本營（9/2）為全程最高點，海拔約5,200m；納木措（9/5）為單日來回的第二高點，約4,718m。兩天皆需特別留意高原反應。</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="block">
+    <div class="block-head">
+      <h2>交通時間軸</h2>
+      <span class="count">8/25 → 9/8</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="leg confirmed">
+        <div class="leg-dot"></div>
+        <div class="leg-card">
+          <div class="leg-date">8/25（二）· D0</div>
+          <div class="leg-title">✈️ 桃園 → 成都</div>
+          <div class="leg-meta">
+            <span class="leg-detail"><b>CI551</b> 08:25 TPE(T2) → 12:00 CTU雙流(T1)</span>
+            <span class="pill confirmed">已出票</span>
+          </div>
+          <div class="leg-sub">🏨 太古裡亞朵S飯店（8/25–8/26，已訂房）</div>
+        </div>
+      </div>
+
+      <div class="leg pending">
+        <div class="leg-dot"></div>
+        <div class="leg-card">
+          <div class="leg-date">8/26（三）</div>
+          <div class="leg-title">🚗 成都市區（雙流側）→ 天府機場</div>
+          <div class="leg-meta">
+            <span class="leg-detail">自理接駁 · 約50–65km</span>
+            <span class="pill pending">尚未安排</span>
+          </div>
+          <div class="leg-sub">🏨 Joyhub悅享酒店（天府機場內，8/26–8/27，已訂房）</div>
+        </div>
+      </div>
+
+      <div class="leg confirmed">
+        <div class="leg-dot"></div>
+        <div class="leg-card">
+          <div class="leg-date">8/27（四）· D1</div>
+          <div class="leg-title">✈️ 成都天府 → 林芝米林</div>
+          <div class="leg-meta">
+            <span class="leg-detail"><b>3U6671</b> 天府T2 07:55 → 10:00</span>
+            <span class="pill confirmed">已出票</span>
+          </div>
+          <div class="leg-sub">🚙 林芝機場 → 酒店：團方接送起，交由旅行社包車接管</div>
+        </div>
+      </div>
+
+      <div class="leg handoff">
+        <div class="leg-dot"></div>
+        <div class="leg-card">
+          <div class="leg-date">8/28 – 9/6 · D2–D11</div>
+          <div class="leg-title">🚙 團方包車 / 拉日鐵路（全程接管段）</div>
+          <div class="leg-meta">
+            <span class="leg-detail">魯朗 · 巴松措 · 拉薩 · 羊湖 · EBC · 日喀則 · 納木措 · 甘丹寺</span>
+          </div>
+          <div class="leg-sub">
+            9/1 拉薩 → 日喀則（3,840m）　·　9/2 珠峰大本營（5,200m）　·　9/4 日喀則 → 拉薩：<b>拉日鐵路</b>約2hr20　·　9/5 納木措（4,718m，9人座包車）　·　9/6 甘丹寺
+          </div>
+        </div>
+      </div>
+
+      <div class="leg handoff">
+        <div class="leg-dot"></div>
+        <div class="leg-card">
+          <div class="leg-date">9/7（一）</div>
+          <div class="leg-title">🚙 拉薩 → 貢嘎機場</div>
+          <div class="leg-meta">
+            <span class="leg-detail">團方送機 · 抵達航廈 <b>T3</b></span>
+            <span class="pill handoff">團方服務結束</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="leg confirmed">
+        <div class="leg-dot"></div>
+        <div class="leg-card">
+          <div class="leg-date">9/7（一）· D12</div>
+          <div class="leg-title">✈️ 貢嘎 → 成都</div>
+          <div class="leg-meta">
+            <span class="leg-detail"><b>3U8686</b> 11:00 LXA(T3) → 13:10 CTU雙流(T1)</span>
+            <span class="pill confirmed">已出票</span>
+          </div>
+          <div class="leg-sub">🏨 太古裡城際飯店（9/7–9/8，已訂房）</div>
+        </div>
+      </div>
+
+      <div class="leg confirmed">
+        <div class="leg-dot"></div>
+        <div class="leg-card">
+          <div class="leg-date">9/8（二）</div>
+          <div class="leg-title">✈️ 成都 → 桃園</div>
+          <div class="leg-meta">
+            <span class="leg-detail"><b>CI552</b> 13:10 CTU雙流(T1) → 16:55 TPE(T2)</span>
+            <span class="pill confirmed">已出票</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>尚待確認</h2>
+      <span class="count">2 項</span>
+    </div>
+
+    <div class="todo">
+      <div class="todo-title">8/26 成都市區 → 天府機場接駁方式</div>
+      <div class="todo-note">目前無安排文件，距離約50–65km，建議提早叫車或確認飯店是否提供叫車協助。</div>
+    </div>
+
+    <div class="todo">
+      <div class="todo-title">尾款 CNY 22,804 支付截止日</div>
+      <div class="todo-note">合約載明「行程出發前7日內」，但未指明基準日（8/25桃園出發 或 8/27西藏集合），需向Kira確認精確日期。</div>
+    </div>
+  </section>
+
+  <footer>
+    <span>資料來源：官方電子機票 / 訂房確認 / 旅行社合約</span>
+    <span>2026.08.07 整理</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
