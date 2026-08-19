@@ -2,88 +2,114 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>西藏12日 · 行程、交通與海拔全覽</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>入藏 · 西藏12日</title>
+<meta name="theme-color" content="#7A2E32">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="入藏">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --earth:#E5DDCB;
-    --paper:#FBF8F2;
-    --benma:#7A2E32;
-    --benma-deep:#571F24;
-    --malachite:#2C6E5B;
-    --orpiment:#B5811C;
-    --gold-ink:#7D5710;
-    --green-ink:#215446;
-    --ink:#2B241D;
-    --ink-dim:#6B6152;
-    --line:rgba(43,36,29,0.16);
-    --line-soft:rgba(43,36,29,0.09);
-    --rail:rgba(43,36,29,0.22);
+    --earth:#E5DDCB; --paper:#FBF8F2;
+    --benma:#7A2E32; --benma-deep:#571F24;
+    --malachite:#2C6E5B; --orpiment:#B5811C;
+    --gold-ink:#7D5710; --green-ink:#215446;
+    --ink:#2B241D; --ink-dim:#6B6152;
+    --line:rgba(43,36,29,0.16); --line-soft:rgba(43,36,29,0.09);
     --f1:#1F4F7A; --f2:#F5F1E7; --f3:#A33B34; --f4:#2C6E5B; --f5:#C99A2E;
+    --nav-h:58px;
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
-  body{
-    background:var(--earth);color:var(--ink);
-    font-family:'Noto Sans TC',sans-serif;font-weight:400;line-height:1.62;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{background:var(--earth);color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    font-weight:400;line-height:1.62;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;}
   ::selection{background:var(--orpiment);color:#fff;}
+  a{color:var(--benma);}
 
+  /* ── 頂部：經幡 + 邊瑪牆標題列 ── */
+  header{position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top);background:var(--earth);}
   .string{border-top:1.5px solid rgba(43,36,29,0.45);display:flex;gap:2px;padding:0 1px;}
-  .string i{flex:1;height:14px;}
+  .string i{flex:1;height:11px;}
   .string i:nth-child(5n+1){background:var(--f1);}
   .string i:nth-child(5n+2){background:var(--f2);}
   .string i:nth-child(5n+3){background:var(--f3);}
   .string i:nth-child(5n+4){background:var(--f4);}
   .string i:nth-child(5n+5){background:var(--f5);}
+  .bb{background:var(--benma);padding:10px 18px 11px;position:relative;}
+  .bb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--benma-deep);}
+  .bb-row{max-width:720px;margin:0 auto;display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+  .bb-row h1{font-family:'Noto Serif TC',serif;font-weight:500;font-size:19px;color:#F5F1E7;margin:0;letter-spacing:.09em;}
+  .bb-row .meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,241,231,0.68);letter-spacing:.05em;}
+  .discs{display:flex;gap:8px;margin:6px auto 0;max-width:720px;}
+  .discs i{width:4px;height:4px;border-radius:50%;background:var(--orpiment);opacity:.9;}
 
-  .wrap{max-width:720px;margin:0 auto;padding:0 22px 84px;}
-  .hero{padding:42px 22px 32px;}
-  .hero-inner{max-width:720px;margin:0 auto;}
-  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--benma);margin:0 0 16px;}
-  h1{font-family:'Noto Serif TC',serif;font-weight:700;font-size:clamp(29px,7vw,44px);line-height:1.16;letter-spacing:.01em;margin:0 0 14px;}
-  .hero p.lede{color:var(--ink-dim);font-size:14.5px;font-weight:300;max-width:44ch;margin:0 0 28px;}
-
-  .chart-card{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:20px 16px 12px;}
-  .label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 10px;}
-  svg{display:block;width:100%;height:auto;overflow:visible;}
-  .ax{font-family:'IBM Plex Mono',monospace;font-size:10px;fill:var(--ink-dim);}
-  .pk{font-family:'Noto Serif TC',serif;font-size:13px;fill:var(--benma);font-weight:500;}
-  .elev{fill:none;stroke:var(--benma);stroke-width:2;stroke-linejoin:round;}
-  .elevfill{fill:rgba(181,129,28,0.18);}
-  .edot{fill:var(--paper);stroke:var(--benma);stroke-width:1.8;}
-  .edot.peak{fill:var(--benma);}
-  .cord{stroke:rgba(43,36,29,0.5);stroke-width:1;fill:none;}
-  .cap{font-size:12px;color:var(--ink-dim);margin:12px 2px 4px;font-weight:300;}
-
-  .alert{margin-top:22px;background:var(--paper);border:1px solid rgba(122,46,50,0.4);border-top:4px solid var(--benma);padding:17px 18px 15px;}
-  .alert .label{color:var(--benma);}
-  .alert h3{font-family:'Noto Serif TC',serif;font-weight:500;font-size:18px;margin:0 0 12px;letter-spacing:.02em;}
-  .alert dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 12px;font-size:13px;}
-  .alert dt{font-size:11px;font-weight:500;letter-spacing:.12em;color:var(--ink-dim);white-space:nowrap;padding-top:3px;}
-  .alert dd{margin:0;font-weight:300;color:var(--ink-dim);}
-  .alert dd b{font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--benma);}
-  .alert p.warn{font-size:12px;color:var(--benma);margin:0;font-weight:300;border-top:1px solid rgba(122,46,50,0.22);padding-top:10px;}
-
-  section{margin-top:44px;}
-  .benma{background:var(--benma);margin:0 -22px 20px;padding:11px 22px 13px;position:relative;}
-  .benma::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--benma-deep);}
-  .benma-row{max-width:720px;margin:0 auto;display:flex;align-items:baseline;justify-content:space-between;gap:14px;}
-  .benma h2{font-family:'Noto Serif TC',serif;font-weight:500;font-size:19px;color:#F5F1E7;margin:0;letter-spacing:.06em;}
-  .benma .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(245,241,231,0.6);letter-spacing:.06em;}
-  .discs{display:flex;gap:9px;margin:7px auto 0;max-width:720px;}
-  .discs i{width:5px;height:5px;border-radius:50%;background:var(--orpiment);opacity:.9;}
-
+  main{max-width:720px;margin:0 auto;padding:16px 18px calc(var(--nav-h) + env(safe-area-inset-bottom) + 34px);}
+  .view{display:none;} .view.on{display:block;}
   .intro{font-size:12.5px;color:var(--ink-dim);font-weight:300;margin:0 0 14px;}
+  .intro b{color:var(--ink);font-weight:500;}
+  .card{background:var(--paper);border:1px solid var(--line);padding:13px 15px;}
+  .card + .card{margin-top:10px;}
 
-  /* 責任軌 */
+  /* ── 今日 ── */
+  .big{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--benma);padding:18px 16px 16px;margin-bottom:12px;}
+  .big .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--benma);text-transform:uppercase;margin-bottom:8px;}
+  .big .huge{font-family:'Noto Serif TC',serif;font-weight:700;font-size:29px;line-height:1.15;margin:0 0 6px;letter-spacing:.01em;}
+  .big .where{font-size:14px;color:var(--ink-dim);font-weight:300;margin-bottom:14px;}
+  .altbar{display:flex;gap:10px;flex-wrap:wrap;}
+  .altbox{flex:1;min-width:130px;background:rgba(43,36,29,0.05);padding:9px 12px;}
+  .altbox .w{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-dim);letter-spacing:.08em;}
+  .altbox .v{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500;color:var(--benma);}
+  .altbox.peak .v{color:var(--gold-ink);}
+  .countdown{font-family:'Noto Serif TC',serif;font-size:52px;font-weight:700;line-height:1;color:var(--benma);}
+  .countdown small{font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:400;color:var(--ink-dim);margin-left:6px;}
+
+  /* ── 勾選 ── */
+  .checks{margin-top:14px;padding-top:13px;border-top:1px solid var(--line-soft);}
+  .checks h5{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 8px;font-weight:400;}
+  .chk{display:flex;gap:11px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line-soft);cursor:pointer;}
+  .chk:last-child{border-bottom:none;}
+  .box{flex:0 0 18px;width:18px;height:18px;margin-top:2px;border:1.5px solid var(--ink-dim);position:relative;}
+  .chk.key .box{border-color:var(--benma);}
+  .chk.done .box{background:var(--malachite);border-color:var(--malachite);}
+  .chk.done.key .box{background:var(--benma);border-color:var(--benma);}
+  .chk.done .box::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #FBF8F2;border-width:0 2px 2px 0;transform:rotate(42deg);}
+  .chk .ct{font-size:13.5px;line-height:1.5;}
+  .chk.done .ct{color:var(--ink-dim);text-decoration:line-through;text-decoration-color:rgba(43,36,29,0.3);}
+  .chk .cs{display:block;font-size:11.5px;color:var(--ink-dim);font-weight:300;margin-top:1px;text-decoration:none;}
+
+  .lines{margin-top:11px;padding-top:11px;border-top:1px solid var(--line-soft);display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:start;}
+  .lines.nb{border-top:none;padding-top:0;margin-top:8px;}
+  .tag{font-size:11px;font-weight:500;letter-spacing:.14em;padding:2px 6px 2px 7px;white-space:nowrap;background:rgba(43,36,29,0.07);color:var(--ink-dim);margin-top:2px;}
+  .tag.key{background:rgba(122,46,50,0.11);color:var(--benma);}
+  .tag.gold{background:rgba(181,129,28,0.2);color:var(--gold-ink);}
+  .txt{font-size:12.5px;color:var(--ink-dim);font-weight:300;}
+  .txt b{color:var(--ink);font-weight:500;}
+
+  /* ── 行程 ── */
+  .day{background:var(--paper);border:1px solid var(--line);padding:13px 15px;margin-bottom:10px;}
+  .day.high{border-left:3px solid var(--benma);}
+  .day.now{border:1px solid var(--benma);border-left:3px solid var(--benma);box-shadow:0 0 0 3px rgba(122,46,50,0.10);}
+  .day.tbd{border-style:dashed;}
+  .day-h{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px;}
+  .dnum{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;background:rgba(122,46,50,0.11);color:var(--benma);padding:1px 7px;}
+  .day.now .dnum{background:var(--benma);color:#F5F1E7;}
+  .ddate{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.04em;}
+  .dalt{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold-ink);margin-left:auto;}
+  .day-t{font-family:'Noto Serif TC',serif;font-weight:500;font-size:15.5px;letter-spacing:.02em;}
+  .day-s{font-size:13px;color:var(--ink-dim);font-weight:300;margin-top:3px;}
+  .grouphd{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);}
+
+  /* ── 交通軌 ── */
   .rail{position:relative;}
-  .leg{position:relative;padding-left:34px;padding-bottom:16px;}
-  .leg::before{content:"";position:absolute;left:5px;top:0;bottom:0;width:2px;background:var(--rail);}
+  .leg{position:relative;padding-left:32px;padding-bottom:14px;}
+  .leg::before{content:"";position:absolute;left:5px;top:0;bottom:0;width:2px;background:rgba(43,36,29,0.22);}
   .leg.tour::before{background:rgba(181,129,28,0.6);}
   .leg.first::before{top:8px;}
   .leg.last::before{bottom:auto;height:8px;}
@@ -91,465 +117,685 @@
   .node{position:absolute;left:0;top:3px;width:12px;height:12px;border-radius:50%;border:2px solid var(--malachite);background:var(--malachite);z-index:1;}
   .node.tour{border-color:var(--orpiment);background:var(--orpiment);}
   .node.wait{border-color:var(--benma);background:var(--paper);}
-
-  .card{background:var(--paper);border:1px solid var(--line);padding:13px 15px;}
   .date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.05em;margin-bottom:3px;}
   .date em{font-style:normal;color:var(--gold-ink);}
-  .ttl{font-family:'Noto Serif TC',serif;font-weight:500;font-size:16px;margin-bottom:7px;letter-spacing:.02em;}
+  .ttl{font-family:'Noto Serif TC',serif;font-weight:500;font-size:15.5px;margin-bottom:7px;letter-spacing:.02em;}
   .row{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;}
   .data{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-dim);}
   .data b{color:var(--ink);font-weight:500;}
-  .pill{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;padding:3px 8px;border-radius:2px;margin-left:auto;text-transform:uppercase;}
+  .pill{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;padding:3px 8px;margin-left:auto;text-transform:uppercase;}
   .pill.ok{background:rgba(44,110,91,0.14);color:var(--green-ink);}
   .pill.wait{background:rgba(122,46,50,0.12);color:var(--benma);}
   .pill.tour{background:rgba(181,129,28,0.2);color:var(--gold-ink);}
 
-  .lines{margin-top:10px;padding-top:10px;border-top:1px solid var(--line-soft);display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:start;}
-  .tag{font-size:11px;font-weight:500;letter-spacing:.14em;padding:2px 6px 2px 7px;border-radius:2px;white-space:nowrap;background:rgba(43,36,29,0.07);color:var(--ink-dim);margin-top:2px;}
-  .tag.key{background:rgba(122,46,50,0.11);color:var(--benma);}
-  .tag.gold{background:rgba(181,129,28,0.2);color:var(--gold-ink);}
-  .txt{font-size:12.5px;color:var(--ink-dim);font-weight:300;}
-  .txt b{color:var(--ink);font-weight:500;}
-
-  /* 行程 */
-  .day{background:var(--paper);border:1px solid var(--line);padding:13px 15px;margin-bottom:10px;}
-  .day.high{border-left:3px solid var(--benma);}
-  .day-h{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px;}
-  .dnum{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;background:rgba(122,46,50,0.11);color:var(--benma);padding:1px 7px;}
-  .ddate{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.04em;}
-  .dalt{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold-ink);margin-left:auto;}
-  .day-t{font-family:'Noto Serif TC',serif;font-weight:500;font-size:15.5px;letter-spacing:.02em;}
-  .day-s{font-size:13px;color:var(--ink-dim);font-weight:300;margin-top:3px;}
-
-  /* 住宿 */
+  /* ── 住宿 ── */
   .stay{background:var(--paper);border:1px solid var(--line);padding:2px 15px;}
   .stay-row{padding:12px 0;border-bottom:1px solid var(--line-soft);}
   .stay-row:last-child{border-bottom:none;}
+  .stay-row.now{background:rgba(122,46,50,0.05);margin:0 -15px;padding-left:12px;padding-right:15px;border-left:3px solid var(--benma);}
   .stay-d{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--benma);letter-spacing:.03em;}
   .stay-n{font-size:14px;font-weight:500;margin-top:1px;}
   .stay-m{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);margin-top:3px;line-height:1.5;}
-  .stay-row.ebc .stay-d{color:var(--gold-ink);}
+  .acts{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .act{font-size:11.5px;letter-spacing:.06em;padding:5px 11px;border:1px solid var(--line);background:rgba(43,36,29,0.04);color:var(--ink);text-decoration:none;cursor:pointer;}
+  .act.call{border-color:rgba(122,46,50,0.4);color:var(--benma);}
+  .act:active{background:rgba(43,36,29,0.1);}
 
-  /* 面板 */
-  .panel{background:var(--paper);border:1px solid var(--line);padding:16px 16px 14px;}
-  .panel + .panel{margin-top:12px;}
-  .panel h4{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 12px;font-weight:400;}
-  .dose{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;}
+  /* ── 面板 ── */
+  .panel{background:var(--paper);border:1px solid var(--line);padding:15px 15px 13px;}
+  .panel + .panel{margin-top:11px;}
+  .panel h4{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 11px;font-weight:400;}
+  .dose{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
   .dose-cell{background:rgba(43,36,29,0.05);padding:10px 12px;}
-  .dose-w{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-dim);letter-spacing:.07em;margin-bottom:2px;}
+  .dose-w{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-dim);letter-spacing:.07em;}
   .dose-a{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:500;color:var(--benma);}
   .fact{display:flex;justify-content:space-between;gap:14px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line-soft);}
   .fact:last-of-type{border-bottom:none;}
   .fact span:first-child{color:var(--ink-dim);font-weight:300;}
   .fact span:last-child{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;}
   .fact.hi span:last-child{color:var(--gold-ink);font-weight:500;}
-  .note{font-size:12.5px;color:var(--ink-dim);font-weight:300;margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line-soft);}
+  .fact.bad span:last-child{color:var(--benma);font-weight:500;}
+  .note{font-size:12.5px;color:var(--ink-dim);font-weight:300;margin:11px 0 0;padding-top:10px;border-top:1px solid var(--line-soft);}
   .note b{color:var(--benma);font-weight:500;}
+  .steps{margin:0;padding-left:20px;font-size:13px;color:var(--ink-dim);font-weight:300;}
+  .steps li{padding:4px 0;}
+  .steps b{color:var(--ink);font-weight:500;}
+  .steps li.first{color:var(--ink);}
+  .steps li.first b{color:var(--benma);}
 
-  /* 待確認 */
-  .todo{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--benma);padding:13px 15px;margin-bottom:12px;}
-  .todo:last-child{margin-bottom:0;}
+  .todo{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--benma);padding:13px 15px;margin-bottom:11px;}
   .todo-t{font-family:'Noto Serif TC',serif;font-weight:500;font-size:15px;margin-bottom:4px;}
   .todo-n{font-size:12.5px;color:var(--ink-dim);font-weight:300;}
   .todo-w{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--benma);display:block;margin-top:7px;}
 
-  /* 聯絡 */
-  .contacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
-  .contact{background:var(--paper);border:1px solid var(--line);padding:13px 15px;}
-  .c-role{font-size:10.5px;letter-spacing:.13em;color:var(--ink-dim);margin-bottom:6px;}
-  .c-name{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:500;margin-bottom:2px;}
-  .c-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--benma);}
-  .c-note{font-size:11.5px;color:var(--ink-dim);margin-top:5px;font-weight:300;}
+  .contact{background:var(--paper);border:1px solid var(--line);padding:13px 15px;margin-bottom:10px;}
+  .c-role{font-size:10.5px;letter-spacing:.13em;color:var(--ink-dim);margin-bottom:5px;}
+  .c-name{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:500;}
+  .c-num{font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--benma);margin-top:1px;}
+  .c-note{font-size:11.5px;color:var(--ink-dim);margin-top:4px;font-weight:300;}
 
-  footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  /* ── 摺疊 ── */
+  details{background:var(--paper);border:1px solid var(--line);margin-bottom:11px;}
+  details.sos{border-left:3px solid var(--benma);}
+  details > summary{list-style:none;cursor:pointer;padding:13px 15px;font-family:'Noto Serif TC',serif;font-weight:500;font-size:15.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  details.sos > summary{color:var(--benma);}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::after{content:"";width:7px;height:7px;border-right:1.5px solid var(--benma);border-bottom:1.5px solid var(--benma);transform:rotate(45deg);margin-right:3px;flex:0 0 auto;transition:transform .15s;}
+  details[open] > summary::after{transform:rotate(-135deg);}
+  details > summary .sn{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);margin-left:auto;font-weight:400;}
+  .dbody{padding:0 15px 14px;border-top:1px solid var(--line-soft);}
+  .dbody > *:first-child{margin-top:13px;}
+  .dbody .panel,.dbody .todo,.dbody .contact{border:none;padding:0;background:transparent;margin-bottom:0;}
+  .dbody .todo{border-left:3px solid var(--benma);padding-left:12px;margin-bottom:14px;}
+  .dbody .contact{border-bottom:1px solid var(--line-soft);padding-bottom:11px;margin-bottom:11px;}
+  .dbody .contact:last-child{border-bottom:none;margin-bottom:0;}
+  .dbody .panel + .panel{margin-top:15px;padding-top:13px;border-top:1px solid var(--line-soft);}
 
-  @media(max-width:480px){
-    .hero{padding:32px 18px 24px;}
-    .wrap{padding:0 18px 60px;}
-    .benma{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px;}
-    .dose{grid-template-columns:1fr;}
-    .alert dl{grid-template-columns:1fr;gap:2px;}
-    .alert dt{padding-top:8px;}
-    .dalt{margin-left:0;width:100%;}
+  /* ── 圖表 ── */
+  .chart-card{background:var(--paper);border:1px solid var(--line);padding:16px 12px 8px;margin-bottom:12px;}
+  .label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin:0 0 8px;}
+  svg{display:block;width:100%;height:auto;overflow:visible;}
+  .ax{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:var(--ink-dim);}
+  .pkl{font-family:'Noto Serif TC',serif;font-size:14px;fill:var(--benma);font-weight:500;}
+  .elev{fill:none;stroke:var(--benma);stroke-width:2.2;stroke-linejoin:round;}
+  .elevfill{fill:rgba(181,129,28,0.18);}
+  .edot{fill:var(--paper);stroke:var(--benma);stroke-width:1.8;}
+  .edot.peak{fill:var(--benma);}
+  .cord{stroke:rgba(43,36,29,0.5);stroke-width:1;fill:none;}
+  .here{fill:none;stroke:var(--benma);stroke-width:2;}
+  .cap{font-size:12px;color:var(--ink-dim);margin:10px 4px 4px;font-weight:300;}
+
+
+  /* ── 生日 ── */
+  .bday{background:var(--paper);border:1px solid rgba(181,129,28,0.55);border-top:4px solid var(--orpiment);padding:0 0 16px;margin-bottom:12px;}
+  .bday .fstr{display:flex;gap:2px;padding:0 1px;}
+  .bday .fstr i{flex:1;height:26px;transform-origin:top center;}
+  .bday .fstr i:nth-child(5n+1){background:var(--f1);}
+  .bday .fstr i:nth-child(5n+2){background:var(--f2);}
+  .bday .fstr i:nth-child(5n+3){background:var(--f3);}
+  .bday .fstr i:nth-child(5n+4){background:var(--f4);}
+  .bday .fstr i:nth-child(5n+5){background:var(--f5);}
+  .bday .bd-in{padding:16px 17px 0;}
+  .bday .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--gold-ink);text-transform:uppercase;margin-bottom:9px;}
+  .bday .bname{font-family:'Noto Serif TC',serif;font-weight:700;font-size:27px;line-height:1.2;margin:0 0 14px;}
+  .bday p{font-family:'Noto Serif TC',serif;font-size:14.5px;font-weight:400;line-height:1.95;color:var(--ink);margin:0 0 12px;}
+  .bday p:last-child{margin-bottom:0;}
+  .bdayline{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--gold-ink);margin-top:7px;letter-spacing:.03em;}
+
+
+  /* ── 生日卡動畫 ── */
+  .bday.play .fstr i{animation:sway 4s ease-in-out infinite;}
+  .bday.play .fstr i:nth-child(1){animation-delay:0.00s;}
+  .bday.play .fstr i:nth-child(2){animation-delay:0.11s;}
+  .bday.play .fstr i:nth-child(3){animation-delay:0.22s;}
+  .bday.play .fstr i:nth-child(4){animation-delay:0.33s;}
+  .bday.play .fstr i:nth-child(5){animation-delay:0.44s;}
+  .bday.play .fstr i:nth-child(6){animation-delay:0.55s;}
+  .bday.play .fstr i:nth-child(7){animation-delay:0.66s;}
+  .bday.play .fstr i:nth-child(8){animation-delay:0.77s;}
+  .bday.play .fstr i:nth-child(9){animation-delay:0.88s;}
+  .bday.play .fstr i:nth-child(10){animation-delay:0.99s;}
+  .bday.play .fstr i:nth-child(11){animation-delay:1.10s;}
+  .bday.play .fstr i:nth-child(12){animation-delay:1.21s;}
+  .bday.play .fstr i:nth-child(13){animation-delay:1.32s;}
+  .bday.play .fstr i:nth-child(14){animation-delay:1.43s;}
+  .bday.play .fstr i:nth-child(15){animation-delay:1.54s;}
+  .bday.play .fstr i:nth-child(16){animation-delay:1.65s;}
+  .bday.play .fstr i:nth-child(17){animation-delay:1.76s;}
+  .bday.play .fstr i:nth-child(18){animation-delay:1.87s;}
+  .bday.play .fstr i:nth-child(19){animation-delay:1.98s;}
+  .bday.play .fstr i:nth-child(20){animation-delay:2.09s;}
+  .bday.play .fstr i:nth-child(21){animation-delay:2.20s;}
+  .bday.play .fstr i:nth-child(22){animation-delay:2.31s;}
+  .bday.play .fstr i:nth-child(23){animation-delay:2.42s;}
+  .bday.play .fstr i:nth-child(24){animation-delay:2.53s;}
+  .bday.play .fstr i:nth-child(25){animation-delay:2.64s;}
+  @keyframes sway{
+    0%,100%{transform:rotate(0deg) scaleY(1);}
+    25%    {transform:rotate(2.4deg) scaleY(1.06);}
+    55%    {transform:rotate(-1.8deg) scaleY(0.97);}
+    78%    {transform:rotate(1.2deg) scaleY(1.03);}
   }
+  .bday.play .kicker,.bday.play .bname,.bday.play p{opacity:0;animation:rise .62s cubic-bezier(.2,.7,.3,1) both;}
+  .bday.play .kicker{animation-delay:.10s;}
+  .bday.play .bname{animation-delay:.26s;}
+  .bday.play p:nth-of-type(1){animation-delay:.52s;}
+  .bday.play p:nth-of-type(2){animation-delay:.74s;}
+  .bday.play p:nth-of-type(3){animation-delay:.96s;}
+  @keyframes rise{from{opacity:0;transform:translateY(9px);}to{opacity:1;transform:none;}}
+  @media (prefers-reduced-motion: reduce){
+    .bday.play .fstr i,.bday.play .kicker,.bday.play .bname,.bday.play p{
+      animation:none!important;opacity:1!important;transform:none!important;}
+  }
+
+  /* ── 夜空 ── */
+  .bday{position:relative;}
+  .sky{position:relative;overflow:hidden;background:linear-gradient(180deg,#0E1930 0%,#182642 58%,#20304E 100%);}
+  .sky .st{position:absolute;border-radius:50%;opacity:.2;z-index:0;
+    animation-name:tw;animation-iteration-count:infinite;animation-timing-function:ease-in-out;}
+  @keyframes tw{0%,100%{opacity:.16;transform:scale(.85);}50%{opacity:1;transform:scale(1.2);}}
+  .sky .fstr{position:relative;z-index:2;}
+  .sky-in{position:relative;z-index:2;padding:28px 17px 20px;}
+  .sky-in .kicker{color:#E3C378;margin-bottom:9px;}
+  .sky-in .bname{color:#F8F4EA;margin:0;}
+  .bday .bd-in{padding:16px 17px 0;}
+  @media (prefers-reduced-motion: reduce){ .sky .st{animation:none!important;opacity:.7!important;} }
+
+  /* ── 地圖 ── */
+  .mapd{background:var(--paper);border:1px solid var(--line);margin-bottom:14px;}
+  .mapd .dbody{padding:0 6px 8px;}
+  .mtn{fill:rgba(122,46,50,0.06);}
+  .crest{fill:none;stroke:rgba(122,46,50,0.45);stroke-width:4;stroke-linejoin:round;stroke-linecap:round;}
+  .river{fill:none;stroke:rgba(31,79,122,0.52);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;}
+  .river.thin{stroke-width:3;}
+  .lake{fill:rgba(31,79,122,0.32);stroke:rgba(31,79,122,0.6);stroke-width:2.5;}
+  .peakmk{fill:var(--benma);}
+  .mseg{stroke:rgba(122,46,50,0.34);stroke-width:3.4;fill:none;stroke-linecap:round;}
+  .mseg.rail{stroke-dasharray:14 11;}
+  .mnow{stroke:var(--benma);stroke-width:7.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .mpt{fill:var(--paper);stroke:var(--benma);stroke-width:3.4;}
+  .mpt.stay{fill:var(--benma);}
+  .mring{fill:none;stroke:var(--benma);stroke-width:3;opacity:.5;}
+  .mlbl{font-family:'Noto Sans TC',sans-serif;font-size:32px;font-weight:500;fill:var(--ink);}
+  .mlbl.dim{font-size:29px;fill:var(--ink-dim);font-weight:400;}
+  .mkey{font-family:'IBM Plex Mono',monospace;font-size:27px;fill:var(--ink-dim);letter-spacing:.06em;}
+
+  /* ── 跨頁連結 ── */
+  .jump{color:var(--benma);border-bottom:1px solid rgba(122,46,50,.4);cursor:pointer;
+    white-space:nowrap;font-weight:500;text-decoration:none;}
+
+  /* ── 底部分頁 ── */
+  nav{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--benma);border-top:3px solid var(--benma-deep);padding-bottom:env(safe-area-inset-bottom);display:flex;}
+  nav button{flex:1;background:none;border:none;cursor:pointer;padding:9px 2px 10px;font-family:'Noto Serif TC',serif;font-size:13.5px;font-weight:500;color:rgba(245,241,231,0.55);letter-spacing:.08em;position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;}
+  nav button .mk{width:5px;height:5px;border-radius:50%;background:transparent;}
+  nav button.on{color:#F5F1E7;}
+  nav button.on .mk{background:var(--orpiment);}
+  nav button .badge{position:absolute;top:5px;right:calc(50% - 22px);min-width:15px;height:15px;line-height:15px;border-radius:8px;background:var(--orpiment);color:#3A2705;font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-align:center;padding:0 4px;}
+
+  .foot{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-dim);line-height:1.7;}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px);background:var(--benma-deep);color:#F5F1E7;font-size:12.5px;padding:8px 16px;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s;}
+  .toast.on{opacity:1;}
 </style>
 </head>
 <body>
 
-<div class="string"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-
-<div class="hero">
-  <div class="hero-inner">
-    <p class="eyebrow">May × YuLun · 2026.08.25 – 09.08</p>
-    <h1>西藏12日<br>行程、交通與海拔全覽</h1>
-    <p class="lede">從成都平原到珠峰大本營，再回到海平面——這趟旅程真正的主線是海拔的起伏。</p>
-
-    <div class="chart-card">
-      <p class="label">海拔曲線</p>
-      <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="全程海拔曲線，最高點為9月2日珠峰大本營5200公尺，峰頂繪有經幡">
-        <line x1="20" y1="260" x2="980" y2="260" stroke="rgba(43,36,29,0.22)" stroke-width="1"/>
-        <path class="elevfill" d="M20,237 L88.6,237 L157,121 L226,121 L294,92 L363,92 L431,92 L500,83 L569,20 L637,83 L706,92 L774,42 L843,85 L911,237 L980,258 L980,260 L20,260 Z"/>
-        <path class="elev" d="M20,237 L88.6,237 L157,121 L226,121 L294,92 L363,92 L431,92 L500,83 L569,20 L637,83 L706,92 L774,42 L843,85 L911,237 L980,258"/>
-        <path class="cord" d="M569,18 L462,72"/>
-        <path class="cord" d="M569,18 L676,72"/>
-        <rect x="546" y="28" width="8" height="10" fill="#1F4F7A"/>
-        <rect x="529" y="36" width="8" height="10" fill="#F5F1E7" stroke="rgba(43,36,29,0.3)" stroke-width="0.5"/>
-        <rect x="512" y="45" width="8" height="10" fill="#A33B34"/>
-        <rect x="495" y="54" width="8" height="10" fill="#2C6E5B"/>
-        <rect x="478" y="62" width="8" height="10" fill="#C99A2E"/>
-        <rect x="585" y="28" width="8" height="10" fill="#1F4F7A"/>
-        <rect x="602" y="36" width="8" height="10" fill="#F5F1E7" stroke="rgba(43,36,29,0.3)" stroke-width="0.5"/>
-        <rect x="619" y="45" width="8" height="10" fill="#A33B34"/>
-        <rect x="636" y="54" width="8" height="10" fill="#2C6E5B"/>
-        <rect x="653" y="62" width="8" height="10" fill="#C99A2E"/>
-        <circle class="edot" cx="20" cy="237" r="4"/>
-        <circle class="edot" cx="157" cy="121" r="4"/>
-        <circle class="edot" cx="294" cy="92" r="4"/>
-        <circle class="edot peak" cx="569" cy="20" r="5.5"/>
-        <circle class="edot" cx="774" cy="42" r="4"/>
-        <circle class="edot" cx="911" cy="237" r="4"/>
-        <text class="pk" x="569" y="7" text-anchor="middle">珠峰大本營</text>
-        <text class="ax" x="20" y="278" text-anchor="start">8/25 成都</text>
-        <text class="ax" x="157" y="278" text-anchor="middle">8/27 林芝</text>
-        <text class="ax" x="294" y="278" text-anchor="middle">8/29 拉薩</text>
-        <text class="ax" x="569" y="278" text-anchor="middle">9/2 EBC</text>
-        <text class="ax" x="774" y="278" text-anchor="middle">9/5 納木措</text>
-        <text class="ax" x="911" y="278" text-anchor="end">9/7 返成都</text>
-        <text class="ax" x="20" y="252" text-anchor="start">500m</text>
-        <text class="ax" x="157" y="136" text-anchor="middle">2,900m</text>
-        <text class="ax" x="294" y="107" text-anchor="middle">3,650m</text>
-        <text class="ax" x="600" y="18" text-anchor="start" fill="#7D5710">5,200m</text>
-        <text class="ax" x="774" y="57" text-anchor="middle">4,718m</text>
-        <text class="ax" x="911" y="252" text-anchor="end">500m</text>
-      </svg>
-      <p class="cap">珠峰大本營（9/2）為全程最高點，也是唯一在 5,000m 以上過夜的一晚。納木措（9/5）白天經那根拉山口 5,190m，晚上回拉薩睡。</p>
-    </div>
-
-    <div class="alert">
-      <p class="label">出團通知書 · 最優先</p>
-      <h3>入藏函於 8/27 當天在成都機場領取</h3>
-      <dl>
-        <dt>領取地點</dt><dd>成都天府國際機場 <b>T2 航站樓 · 櫃檯 G06</b></dd>
-        <dt>機場聯繫人</dt><dd>方勤　<b>15756281629</b></dd>
-        <dt>動線</dt><dd>酒店步行 5 分鐘可達航站樓；須先領件再辦登機</dd>
-      </dl>
-      <p class="warn">入藏函不得拍照、翻拍，亦不得轉發至任何群組或社群平台。</p>
-    </div>
+<header>
+  <div class="string"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="bb">
+    <div class="bb-row"><h1 id="hTitle">今日</h1><span class="meta" id="hMeta">—</span></div>
+    <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </div>
-</div>
+</header>
 
-<div class="wrap">
+<main>
+  <div class="view on" id="v-today"></div>
+  <div class="view" id="v-plan"></div>
+  <div class="view" id="v-move"></div>
+  <div class="view" id="v-stay"></div>
+  <div class="view" id="v-memo"></div>
+  <div class="foot">
+    資料來源：出團通知書 / 電子機票 / 訂房確認 / 旅行社合約<br>
+    2026.08.19 更新 · <span id="netState">—</span>
+  </div>
+</main>
 
-  <section>
-    <div class="benma">
-      <div class="benma-row"><h2>交通</h2><span class="n">8/25 → 9/8</span></div>
-      <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<nav id="nav"></nav>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══ 工具 ═══ */
+const store=(()=>{let mem={},ok=false;
+  try{localStorage.setItem('__t','1');localStorage.removeItem('__t');ok=true;}catch(e){ok=false;}
+  return{get(k){try{return ok?localStorage.getItem(k):(mem[k]??null);}catch(e){return mem[k]??null;}},
+         set(k,v){try{if(ok)localStorage.setItem(k,v);else mem[k]=v;}catch(e){mem[k]=v;}}};})();
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),1600);}
+function copyText(s){
+  const done=()=>toast('已複製：'+s);
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=s;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){toast('複製失敗');}
+    document.body.removeChild(ta);};
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(s).then(done).catch(fb);else fb();
+}
+
+/* ═══ 行程資料 ═══ */
+const WD=['日','一','二','三','四','五','六'];
+const TL='<a class="jump" data-jump="1">禮儀通則 →</a>';
+const DAYS=[
+ {d:'2026-08-25',dn:'',t:'桃園 → 成都',s:'CI551 08:25 TPE(T2) → 12:00 CTU雙流(T1)　·　午後起成都自由時間',
+  high:500,sleep:500,hotel:'亞朵S酒店（太古里春熙路）',
+  tasks:[{t:'亞朵S 入住',s:'錦江區正科甲巷48號1棟'},
+         {t:'支付寶／微信各試刷一筆小額',s:'確認兩人帳號都能付款，別等進藏才發現'},
+         {t:'丹木斯 早晚各半顆',s:'療程第 2 天',key:true}]},
+ {d:'2026-08-26',dn:'',t:'春熙路 → 天府機場',s:'白天成都自由時間　·　打車至火車南站 → 地鐵18號線',
+  high:500,sleep:500,hotel:'Joyhub 悅享酒店',
+  tasks:[{t:'亞朵S 退房（最晚 14:00）',s:'行李可寄前台'},
+         {t:'打車至火車南站 → 18號線',s:'打車約25 CNY／20分；18號線10 CNY，直達車33分、末班23:30'},
+         {t:'Joyhub 入住',s:'地鐵出站即 GTC，步行5分鐘'},
+         {t:'丹木斯 早晚各半顆',s:'療程第 3 天',key:true}]},
+ {d:'2026-08-27',dn:'D1',t:'成都天府 → 林芝米林',s:'3U6671 天府T2 07:55 → 10:00　·　低海拔進藏，當日不排景點',
+  high:2950,sleep:2900,hotel:'林芝宇拓路希爾頓惠庭',
+  tasks:[{t:'T2 櫃檯 G06 領入藏函',s:'方勤 15756281629 · 不得拍照或轉發',key:true},
+         {t:'行動電源確認 CCC 標誌',s:'每人限2個、單個≤100Wh、僅限隨身、機上不得使用',key:true},
+         {t:'林芝機場外露天停車場找導遊'},
+         {t:'抵達後休息，不洗頭洗澡、不劇烈活動',s:'進藏第一晚最關鍵'},
+         {t:'丹木斯 早晚各半顆',s:'療程第 4 天',key:true}],
+  notes:[['用餐','三餐皆自理']]},
+ {d:'2026-08-28',dn:'D2',t:'林芝 → 魯朗 → 林芝',s:'色季拉山 · 遠眺南迦巴瓦峰 · 魯朗林海觀景臺 · 扎西崗村 · 魯朗小鎮騎馬射箭 · 國道318紀念碑',
+  high:4728,sleep:2900,hotel:'林芝宇拓路希爾頓惠庭',
+  tasks:[{t:'丹木斯 早晚各半顆',key:true}],
+  notes:[['高度','色季拉山 <b>4,728m</b>，進藏後第一次上到 4,500m 以上，但當晚回 2,900m 睡','key'],
+         ['現金','騎馬射箭可能有自費項目']]},
+ {d:'2026-08-29',dn:'D3',t:'林芝 → 巴松措 → 拉薩',s:'巴松措 · 秀巴古堡',
+  high:5013,highTxt:'約 4,750–5,013m',sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
+  tasks:[{t:'丹木斯 早晚各半顆',key:true}],
+  notes:[['高度','此段需翻越米拉山：走林拉高速為<b>米拉山隧道約 4,750m</b>，走舊318國道為<b>米拉山口 5,013m</b>。不是平順日','key'],
+         ['高度','當晚睡眠海拔由 2,900m 升至 <b>3,650m</b>，注意頭痛與睡眠品質','key'],
+         ['住宿','彌散式供氧']]},
+ {d:'2026-08-30',dn:'D4',t:'拉薩一日',s:'布達拉宮 · 大昭寺 · 藥王山觀景臺 · 八廓街 · 布宮景觀下午茶',
+  high:3725,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
+  tasks:[{t:'布達拉宮安檢：禁帶液體、打火機、刀具',s:'殿內禁止拍照；紅宮參觀限時約 1 小時，跟緊導遊',key:true},
+         {t:'今天有藏服城市街拍（已預約）',s:'八廓街、藥王山觀景臺（50元人民幣背面取景處）'},
+         {t:'備小鈔給大昭寺功德箱'},
+         {t:'丹木斯 早晚各半顆',key:true}],
+  notes:[['用餐','含布宮景觀下午茶'],
+         ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
+ {d:'2026-08-31',dn:'D5',t:'拉薩一日',s:'扎基寺 · 色拉寺',
+  high:3700,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
+  tasks:[{t:'今天有藏服草原拍攝（已預約）',s:'色拉寺辯經後，約 15:00 起'},
+         {t:'丹木斯 早晚各半顆',key:true}],
+  notes:[['提醒','色拉寺辯經多在下午舉行，週日與法會期間可能停辦；此日為<b>週一</b>，風險低'],
+         ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
+ {d:'2026-09-01',dn:'D6',t:'拉薩 → 日喀則',s:'雅江河谷觀景臺 · 羊卓雍措 · 卡若拉冰川 · 白居寺',
+  high:5020,sleep:3840,hotel:'日喀則希爾頓',
+  tasks:[{t:'在日喀則補齊零食與飲水',s:'EBC 沒有商店，帳篷營地只有熱水'},
+         {t:'與犛牛、藏獒合照要收費，先問價再拍'},
+         {t:'丹木斯 早晚各半顆',key:true}],
+  notes:[['高度','崗巴拉山口 4,990m、羊湖 4,441m、<b>卡若拉冰川觀景台約 5,020m</b>（常見的 5,560m 是冰川本身高度，不是路面）'],
+         ['陸路','全日車程長，翻越數個山口，備暈車藥'],
+         ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
+ {d:'2026-09-02',dn:'D7',t:'日喀則 → 珠峰大本營',s:'加烏拉山口 · 絨布寺 · 珠峰大本營',
+  high:5198,sleep:5200,hotel:'珠峰大本營 帳篷標間',
+  tasks:[{t:'丹木斯第二劑提前到 15:00–16:00',s:'降低夜間利尿，今天最重要的一件事',key:true},
+         {t:'頭燈、保暖外套放伸手可及處',s:'夜間如廁在帳篷外，5,200m、0–5°C',key:true},
+         {t:'白天正常補水，睡前2小時起減量'},
+         {t:'留足現金',s:'訊號不穩，掃碼可能失敗'},
+         {t:'不可越過界碑禁區',s:'無人機需許可，實務上多禁飛'}],
+  notes:[['生日','阿玫在全程最高的地方長一歲','gold'],
+         ['高度','<b>全程唯一在 5,000m 以上過夜的一晚</b>','key'],
+         ['住宿','帳篷標間，無供氧；帳篷拆除時轉珠峰山腳四星酒店'],
+         ['用餐','隔日早餐為簡易早'],
+         ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
+ {d:'2026-09-03',dn:'D8',t:'珠峰大本營 → 日喀則',s:'嘉措拉山口觀景臺 · 薩迦寺',
+  high:5248,sleep:3840,hotel:'日喀則希爾頓',
+  tasks:[{t:'丹木斯 早晚各半顆',key:true}],
+  notes:[['高度','嘉措拉山口 <b>約 5,248m</b>，是全程最高的點位；本日之後開始持續下降'],
+         ['用餐','早餐為簡易早（帳篷營地供應）'],
+         ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
+ {d:'2026-09-04',dn:'D9',t:'日喀則 → 拉薩',s:'扎什倫布寺 · 拉日鐵路',
+  high:3840,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
+  tasks:[{t:'丹木斯 早晚各半顆',key:true}],
+  notes:[['陸路','拉日鐵路約 2 小時 20 分，可休息'],['現金','扎什倫布寺布施需小鈔'],
+         ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
+ {d:'2026-09-05',dn:'D10',t:'納木措一日',s:'那根拉山口 · 納木措湖 4,718m（含房、車、導、票）',
+  high:5190,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
+  tasks:[{t:'與犛牛、藏獒合照要收費，先問價再拍'},
+         {t:'丹木斯 療程最後一天',s:'本日之後可停藥',key:true}],
+  notes:[['陸路','9 人座包車，單程約 3.5 小時']]},
+ {d:'2026-09-06',dn:'D11',t:'甘丹寺一日',s:'甘丹寺 約 4,300m（含房、車、導、票）',
+  high:4300,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
+  tasks:[{t:'交付司機與導遊小費 1,200 CNY',s:'西藏最後一夜，用信封一次交付',key:true},
+         {t:'整理行李，隔日 11:00 起飛'}],
+  notes:[['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
+ {d:'2026-09-07',dn:'D12',t:'拉薩 → 成都',s:'團方送機至貢嘎 T3　·　3U8686 11:00 LXA(T3) → 13:10 CTU雙流(T1)',
+  high:3650,sleep:500,hotel:'太古里城際酒店',
+  tasks:[{t:'向導遊確認送機出發時間',s:'酒店在堆龍德慶區，車程約1小時'},
+         {t:'太古里城際酒店 入住',s:'午後與晚上為成都自由時間'}]},
+ {d:'2026-09-08',dn:'',t:'成都 → 桃園',s:'CI552 13:10 CTU雙流(T1) → 16:55 TPE(T2)',
+  high:500,sleep:0,hotel:'—',
+  tasks:[{t:'城際酒店退房，前往雙流機場 T1'},
+         {t:'國際線建議提前 2 小時報到',s:'約 11:10 前抵達 T1'}]}
+];
+
+const FREE=[
+ {d:'8/25（二）',w:'午後 12:00 起',n:'落地成都後，太古里／春熙路一帶'},
+ {d:'8/26（三）',w:'全日至傍晚',n:'亞朵S 退房 14:00，行李可寄前台'},
+ {d:'9/07（一）',w:'13:10 落地後',n:'午後與晚間，太古里城際酒店周邊'}
+];
+
+const PREP=[
+ {t:'尾款 CNY 22,804 匯款',s:'截止日與帳號需向 Kira 確認',key:true},
+ {t:'丹木斯 8/24 起開始服用',s:'早晚各半顆（125mg），療程至 9/05',key:true},
+ {t:'行動電源檢查 CCC 標誌',s:'無標誌在中國國內線會被沒收',key:true},
+ {t:'人民幣現金 2,500–3,000',s:'含 400 CNY 以上的 1／5／10 元小鈔，在台灣的銀行直接換'},
+ {t:'護照與台胞證效期',s:'需 2027/3 月後仍有效'},
+ {t:'旅平險 5,000m 以上承保確認',s:'D7 珠峰 5,200m、D8 嘉措拉 5,248m'},
+ {t:'中國漫遊 SIM／台灣大哥大 30GB',s:'兩人份'},
+ {t:'血氧機'},
+ {t:'保暖外套、毛帽、手套',s:'EBC 夜間 0–5°C，山口更冷'},
+ {t:'防曬乳、護唇膏、太陽眼鏡',s:'高原紫外線強，EBC 雪地反光更強'},
+ {t:'常備藥包',s:'暈車藥（D6 全日盤山）、止痛藥、腸胃藥、止瀉藥'},
+ {t:'濕紙巾／乾洗手',s:'EBC 帳篷無法洗澡'},
+ {t:'保溫瓶',s:'高原需持續補水，熱水優於冷水'},
+ {t:'列印一張紙本備份',s:'入藏函資訊、緊急電話、飯店地址、航班編號'}
+];
+
+const HOTELS=[
+ {d:'8/25',n:'亞朵S酒店（太古里春熙路）',a:'成都市錦江區正科甲巷48號1棟',m:'退房 14:00 · 含2客早餐',from:'2026-08-25',to:'2026-08-25'},
+ {d:'8/26',n:'Joyhub 悅享酒店',a:'成都天府國際機場 雲悅路2號',m:'航站樓內，連通 GTC 與 T1／T2，步行5分鐘 · 早餐 05:30 起 · 訂單 1749262648',from:'2026-08-26',to:'2026-08-26'},
+ {d:'8/27–8/28',n:'林芝宇拓路希爾頓惠庭',a:'西藏林芝市八一鎮阿傑路289號',tel:'+868945982222',m:'無供氧',from:'2026-08-27',to:'2026-08-28'},
+ {d:'8/29–8/31',n:'拉薩希爾頓惠庭（羅布林卡店）',a:'西藏拉薩市堆龍德慶區頓珠金融城',tel:'+868916067777',m:'彌散式供氧 · 位於堆龍德慶區，非市中心',from:'2026-08-29',to:'2026-08-31'},
+ {d:'9/01',n:'日喀則希爾頓',a:'西藏日喀則市桑珠孜區上海中路12號',tel:'+868928855888',m:'彌散式供氧',from:'2026-09-01',to:'2026-09-01'},
+ {d:'9/02',n:'珠峰大本營 帳篷標間',a:'絨布寺西北335米',m:'5,200m · 無供氧 · 帳篷拆除時轉珠峰山腳四星酒店',from:'2026-09-02',to:'2026-09-02'},
+ {d:'9/03',n:'日喀則希爾頓',a:'西藏日喀則市桑珠孜區上海中路12號',tel:'+868928855888',m:'彌散式供氧',from:'2026-09-03',to:'2026-09-03'},
+ {d:'9/04–9/06',n:'拉薩希爾頓惠庭（羅布林卡店）',a:'西藏拉薩市堆龍德慶區頓珠金融城',tel:'+868916067777',m:'通知書已載明 9/05、9/06 為希爾頓',from:'2026-09-04',to:'2026-09-06'},
+ {d:'9/07',n:'太古里城際酒店',a:'成都市錦江區城守街73號',m:'成都市區 · 自理',from:'2026-09-07',to:'2026-09-07'}
+];
+
+const TODOS=[
+ {t:'尾款 CNY 22,804 支付截止日',n:'合約載明「行程出發前7日內」，但未指明基準日（8/25 桃園出發 或 8/27 西藏集合）。需向 Kira 確認精確日期與匯款帳號。',w:'最急'},
+ {t:'G06 櫃檯開櫃 / 方勤到場時間',n:'通知書未載明。影響 8/27 早上何時出門——太早去可能空等，太晚去會壓縮報到時間。',w:'出發前'},
+ {t:'9/7 送機出發時間',n:'11:00 起飛、貢嘎機場距市區約 1 小時，且住宿在堆龍德慶區。需 Kira 確認實際出發時間。',w:'出發前'}
+];
+
+const CONTACTS=[
+ {r:'承辦窗口',n:'Kira｜旅遊訂製',v:'LINE',note:'合約 ECSH260512JWYVLX'},
+ {r:'機場入藏函交付',n:'方勤',v:'15756281629',tel:'+8615756281629',note:'8/27 天府機場 T2 · 櫃檯 G06'},
+ {r:'地接社緊急聯絡',n:'Linger Liao',v:'+86-159-9185-3693',tel:'+8615991853693',note:'国旅环球（北京）国际旅行社'},
+ {r:'中國緊急醫療',n:'急救專線',v:'120',tel:'120',note:'全中國通用；報位置與人數'}
+];
+
+const STARS='<span class="st" style="left:32.9%;top:16.9%;width:2.9px;height:2.9px;background:#E8C874;animation-duration:2.02s;animation-delay:3.29s"></span><span class="st" style="left:58.0%;top:86.7%;width:1.6px;height:1.6px;background:#E8C874;animation-duration:1.99s;animation-delay:1.73s"></span><span class="st" style="left:10.3%;top:42.1%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:2.21s;animation-delay:0.89s"></span><span class="st" style="left:93.4%;top:56.1%;width:2.0px;height:2.0px;background:#FBF8F2;animation-duration:2.02s;animation-delay:0.88s"></span><span class="st" style="left:14.4%;top:41.6%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:2.19s;animation-delay:1.23s"></span><span class="st" style="left:19.0%;top:56.5%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:2.37s;animation-delay:0.39s"></span><span class="st" style="left:56.2%;top:59.9%;width:2.0px;height:2.0px;background:#FBF8F2;animation-duration:3.60s;animation-delay:1.71s"></span><span class="st" style="left:58.3%;top:44.7%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:2.52s;animation-delay:0.72s"></span><span class="st" style="left:9.4%;top:30.6%;width:2.0px;height:2.0px;background:#FBF8F2;animation-duration:4.09s;animation-delay:2.92s"></span><span class="st" style="left:96.6%;top:13.9%;width:2.0px;height:2.0px;background:#FBF8F2;animation-duration:2.31s;animation-delay:1.37s"></span><span class="st" style="left:42.4%;top:91.5%;width:1.3px;height:1.3px;background:#FBF8F2;animation-duration:3.81s;animation-delay:2.29s"></span><span class="st" style="left:31.9%;top:67.0%;width:2.4px;height:2.4px;background:#E8C874;animation-duration:3.14s;animation-delay:3.19s"></span><span class="st" style="left:10.6%;top:27.8%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:3.56s;animation-delay:0.24s"></span><span class="st" style="left:64.3%;top:94.4%;width:2.0px;height:2.0px;background:#FBF8F2;animation-duration:2.61s;animation-delay:1.54s"></span><span class="st" style="left:3.7%;top:45.5%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.43s;animation-delay:1.97s"></span><span class="st" style="left:29.4%;top:70.9%;width:2.0px;height:2.0px;background:#E8C874;animation-duration:2.88s;animation-delay:3.49s"></span><span class="st" style="left:45.1%;top:53.5%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.95s;animation-delay:3.46s"></span><span class="st" style="left:41.8%;top:36.0%;width:2.0px;height:2.0px;background:#E8C874;animation-duration:4.29s;animation-delay:0.60s"></span><span class="st" style="left:24.0%;top:24.5%;width:2.0px;height:2.0px;background:#FBF8F2;animation-duration:3.98s;animation-delay:0.73s"></span><span class="st" style="left:15.6%;top:52.2%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:3.32s;animation-delay:3.81s"></span><span class="st" style="left:51.5%;top:59.8%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:3.75s;animation-delay:1.83s"></span><span class="st" style="left:93.8%;top:65.6%;width:2.4px;height:2.4px;background:#E8C874;animation-duration:2.88s;animation-delay:1.60s"></span><span class="st" style="left:63.0%;top:8.7%;width:1.3px;height:1.3px;background:#E8C874;animation-duration:4.36s;animation-delay:1.76s"></span><span class="st" style="left:59.8%;top:12.4%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:2.28s;animation-delay:0.41s"></span><span class="st" style="left:4.0%;top:83.4%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:2.84s;animation-delay:2.54s"></span><span class="st" style="left:59.9%;top:46.6%;width:1.3px;height:1.3px;background:#FBF8F2;animation-duration:4.02s;animation-delay:3.97s"></span><span class="st" style="left:48.4%;top:10.9%;width:1.3px;height:1.3px;background:#FBF8F2;animation-duration:3.77s;animation-delay:2.96s"></span><span class="st" style="left:68.6%;top:50.5%;width:1.6px;height:1.6px;background:#E8C874;animation-duration:4.28s;animation-delay:2.11s"></span><span class="st" style="left:54.2%;top:5.5%;width:2.4px;height:2.4px;background:#E8C874;animation-duration:2.65s;animation-delay:2.57s"></span><span class="st" style="left:83.5%;top:50.7%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:2.79s;animation-delay:0.89s"></span><span class="st" style="left:50.3%;top:61.6%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:3.93s;animation-delay:3.94s"></span><span class="st" style="left:79.7%;top:78.3%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:3.91s;animation-delay:0.80s"></span><span class="st" style="left:72.4%;top:94.0%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.08s;animation-delay:0.77s"></span><span class="st" style="left:34.9%;top:77.4%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:4.37s;animation-delay:3.82s"></span><span class="st" style="left:22.9%;top:23.9%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:2.74s;animation-delay:1.93s"></span><span class="st" style="left:60.7%;top:3.2%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:2.76s;animation-delay:2.57s"></span><span class="st" style="left:13.1%;top:38.7%;width:2.9px;height:2.9px;background:#E8C874;animation-duration:3.78s;animation-delay:1.91s"></span><span class="st" style="left:78.0%;top:33.6%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:2.89s;animation-delay:1.61s"></span><span class="st" style="left:71.8%;top:18.6%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:1.97s;animation-delay:2.36s"></span><span class="st" style="left:65.1%;top:59.3%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:4.35s;animation-delay:2.63s"></span><span class="st" style="left:54.7%;top:15.1%;width:1.3px;height:1.3px;background:#E8C874;animation-duration:3.90s;animation-delay:2.91s"></span><span class="st" style="left:74.2%;top:15.8%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.97s;animation-delay:0.84s"></span><span class="st" style="left:29.9%;top:25.1%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:2.71s;animation-delay:2.18s"></span><span class="st" style="left:7.4%;top:71.1%;width:2.0px;height:2.0px;background:#FBF8F2;animation-duration:3.56s;animation-delay:3.26s"></span><span class="st" style="left:81.7%;top:83.8%;width:1.6px;height:1.6px;background:#E8C874;animation-duration:3.23s;animation-delay:2.09s"></span><span class="st" style="left:44.2%;top:19.8%;width:1.3px;height:1.3px;background:#E8C874;animation-duration:3.84s;animation-delay:0.60s"></span><span class="st" style="left:61.6%;top:14.1%;width:1.3px;height:1.3px;background:#FBF8F2;animation-duration:2.71s;animation-delay:2.07s"></span><span class="st" style="left:77.6%;top:12.8%;width:2.4px;height:2.4px;background:#E8C874;animation-duration:2.04s;animation-delay:0.77s"></span><span class="st" style="left:11.0%;top:44.6%;width:1.3px;height:1.3px;background:#FBF8F2;animation-duration:3.80s;animation-delay:3.65s"></span><span class="st" style="left:60.9%;top:49.5%;width:2.4px;height:2.4px;background:#FBF8F2;animation-duration:2.40s;animation-delay:1.11s"></span><span class="st" style="left:79.8%;top:49.7%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.65s;animation-delay:3.51s"></span><span class="st" style="left:26.7%;top:54.5%;width:1.6px;height:1.6px;background:#E8C874;animation-duration:4.00s;animation-delay:0.55s"></span><span class="st" style="left:44.4%;top:9.7%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:2.97s;animation-delay:0.85s"></span><span class="st" style="left:13.4%;top:74.5%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:3.51s;animation-delay:1.46s"></span><span class="st" style="left:14.8%;top:46.0%;width:2.9px;height:2.9px;background:#FBF8F2;animation-duration:4.28s;animation-delay:1.59s"></span><span class="st" style="left:97.5%;top:79.6%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.67s;animation-delay:3.98s"></span><span class="st" style="left:42.4%;top:35.8%;width:1.3px;height:1.3px;background:#FBF8F2;animation-duration:3.71s;animation-delay:0.08s"></span><span class="st" style="left:44.2%;top:4.7%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.19s;animation-delay:1.18s"></span><span class="st" style="left:12.4%;top:87.5%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:4.33s;animation-delay:0.42s"></span><span class="st" style="left:5.3%;top:74.7%;width:1.6px;height:1.6px;background:#FBF8F2;animation-duration:3.79s;animation-delay:3.28s"></span>';
+const BDAY={d:'2026-09-02',name:'阿玫',
+ kicker:'9 月 2 日 · 5,200m',
+ title:'阿玫，生日快樂！',
+ msg:['今天身體大概不會太舒服，頭會痛，也睡不好。',
+      '但你在海拔 5,200 公尺的珠峰腳下長了一歲，這件事沒幾個人做得到。',
+      '抬頭看，滿天星星閃爍，五色經幡飄揚——都在跟你說：生日快樂。'],
+ };
+
+/* ═══ 地圖 ═══ */
+const MSTATIC=`<path class="mtn" d="M49.8,641.6 98.7,686.1 140.8,710.6 196.6,697.3 245.5,737.4 294.5,730.7 343.4,708.4 392.3,697.3 441.3,686.1 490.2,697.3 539.1,719.5 607.6,690.6 685.9,686.1 764.2,641.6 832.7,574.7 901.3,507.9 950.2,418.8 L960.0,842.1 L40.0,842.1 Z"/><polyline class="crest" points="49.8,641.6 98.7,686.1 140.8,710.6 196.6,697.3 245.5,737.4 294.5,730.7 343.4,708.4 392.3,697.3 441.3,686.1 490.2,697.3 539.1,719.5 607.6,690.6 685.9,686.1 764.2,641.6 832.7,574.7 901.3,507.9 950.2,418.8"/><polyline class="river" points="147.7,441.0 245.5,429.9 331.7,425.4 402.1,418.8 480.4,414.3 529.4,418.8 617.4,436.6 695.7,463.3 774.0,452.2 852.3,429.9 920.8,351.9 950.2,296.2"/><polyline class="river thin" points="550.9,340.8 541.1,378.7 530.3,418.8"/><path class="lake" d="M465.7,452.2 C490.2,443.3 501.9,476.7 512.7,463.3 C526.4,447.7 541.1,499.0 532.3,530.2 C525.4,552.4 509.8,530.2 501.9,507.9 C491.2,478.9 470.6,490.1 460.8,474.5 Z"/><path class="lake" d="M456.9,124.7 C474.5,80.1 515.6,62.3 543.1,86.8 C546.0,118.0 509.8,140.3 480.4,142.5 C463.8,142.5 455.0,135.8 456.9,124.7 Z"/><ellipse class="lake" cx="823.0" cy="262.8" rx="15" ry="8"/><path class="peakmk" d="M127.8,720.6 L140.8,697.6 L153.8,720.6 Z"/><text class="mlbl dim" x="160.8" y="752.6" text-anchor="start">珠穆朗瑪 8,849m</text><text class="mkey" x="597.9" y="747.0" text-anchor="middle">喜　馬　拉　雅　山　脈</text><text class="mkey" x="695.7" y="509.3" text-anchor="middle">雅魯藏布江</text>`;
+const MP={
+ '林芝':{x:868.0,y:340.8,dx:0,dy:44,an:'middle',k:1},
+ '魯朗':{x:906.1,y:314.0,dx:0,dy:-24,an:'middle',k:0},
+ '巴松措':{x:823.0,y:262.8,dx:0,dy:-24,an:'middle',k:0},
+ '拉薩':{x:550.9,y:340.8,dx:-20,dy:10,an:'end',k:1},
+ '甘丹寺':{x:586.1,y:318.5,dx:20,dy:-12,an:'start',k:0},
+ '納木措':{x:502.9,y:102.4,dx:0,dy:-26,an:'middle',k:0},
+ '羊卓雍措':{x:509.8,y:492.3,dx:20,dy:68,an:'middle',k:0},
+ '江孜':{x:402.1,y:503.4,dx:-8,dy:46,an:'middle',k:0},
+ '日喀則':{x:331.7,y:425.4,dx:0,dy:-40,an:'middle',k:1},
+ '薩迦':{x:247.5,y:507.9,dx:-22,dy:8,an:'end',k:0},
+ '珠峰大本營':{x:133.0,y:675.0,dx:36,dy:10,an:'start',k:2},
+ '貢嘎機場':{x:530.3,y:418.8,dx:22,dy:8,an:'start',k:0}
+};
+const MSEG=[['林芝','魯朗'],['林芝','巴松措'],['巴松措','拉薩'],['拉薩','羊卓雍措'],
+ ['羊卓雍措','江孜'],['江孜','日喀則'],['日喀則','珠峰大本營'],['珠峰大本營','薩迦'],
+ ['薩迦','日喀則'],['日喀則','拉薩','rail'],['拉薩','納木措'],['拉薩','甘丹寺'],['拉薩','貢嘎機場']];
+const DROUTE={
+ '2026-08-27':['林芝'],'2026-08-28':['林芝','魯朗','林芝'],'2026-08-29':['林芝','巴松措','拉薩'],
+ '2026-08-30':['拉薩'],'2026-08-31':['拉薩'],'2026-09-01':['拉薩','羊卓雍措','江孜','日喀則'],
+ '2026-09-02':['日喀則','珠峰大本營'],'2026-09-03':['珠峰大本營','薩迦','日喀則'],
+ '2026-09-04':['日喀則','拉薩'],'2026-09-05':['拉薩','納木措','拉薩'],
+ '2026-09-06':['拉薩','甘丹寺','拉薩'],'2026-09-07':['拉薩','貢嘎機場']
+};
+function tibetMap(){
+  let segs='',pts='',lbls='',now='';
+  MSEG.forEach(([a,b,k])=>{segs+=`<line class="mseg${k?' '+k:''}" x1="${MP[a].x}" y1="${MP[a].y}" x2="${MP[b].x}" y2="${MP[b].y}"/>`;});
+  const R=CUR>=0?DROUTE[DAYS[CUR].d]:null;
+  if(R&&R.length>1) now=`<polyline class="mnow" points="${R.map(n=>MP[n].x+','+MP[n].y).join(' ')}"/>`;
+  Object.entries(MP).forEach(([n,P])=>{
+    const on=R&&R.includes(n);
+    if(P.k===2) pts+=`<circle class="mring" cx="${P.x}" cy="${P.y}" r="24"/>`;
+    if(on)      pts+=`<circle class="mring" cx="${P.x}" cy="${P.y}" r="30"/>`;
+    pts+=`<circle class="mpt${P.k?' stay':''}" cx="${P.x}" cy="${P.y}" r="${P.k===2?13:(P.k?11:9)}"/>`;
+    lbls+=`<text class="mlbl${(P.k||on)?'':' dim'}" x="${P.x+P.dx}" y="${P.y+P.dy}" text-anchor="${P.an}">${n}</text>`;
+  });
+  const cap = R&&R.length>1 ? `粗線為今日路線：${R.join(' → ')}` :
+              (R&&R.length===1 ? `今日停留：${R[0]}` :
+               '實心點為過夜地，空心點為當日停留，虛線為拉日鐵路。縱向已放大約 2 倍以便閱讀。');
+  const open = store.get('mapOpen')!=='0';
+  return `<details class="mapd" id="mapd"${open?' open':''}>
+    <summary>西藏移動路線<span class="sn">可收合</span></summary>
+    <div class="dbody"><svg viewBox="0 0 1000 880" preserveAspectRatio="xMidYMid meet" role="img" aria-label="西藏陸路移動路線示意圖">
+    ${MSTATIC}${segs}${now}${pts}${lbls}</svg><p class="cap">${cap}</p></div></details>`;
+}
+
+/* ═══ 日期 ═══ */
+function todayISO(){const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+const TODAY=todayISO();
+const CUR=DAYS.findIndex(x=>x.d===TODAY);
+function fmt(iso){const[y,m,dd]=iso.split('-').map(Number);
+  return `${m}/${String(dd).padStart(2,'0')}（${WD[new Date(y,m-1,dd).getDay()]}）`;}
+function gap(a,b){const p=s=>{const[y,m,d]=s.split('-').map(Number);return Date.UTC(y,m-1,d);};
+  return Math.round((p(b)-p(a))/86400000);}
+const PHASE = CUR>=0 ? 'during' : (TODAY<DAYS[0].d ? 'before' : 'after');
+const prepLeft = ()=>PREP.filter((_,i)=>store.get(`chk:prep:${i}`)!=='1').length;
+
+/* ═══ 元件 ═══ */
+function checks(id,items,heading){
+  let h=`<div class="checks"><h5>${heading}</h5>`;
+  items.forEach((it,i)=>{
+    const k=it._k||`chk:${id}:${i}`, on=store.get(k)==='1';
+    h+=`<div class="chk${on?' done':''}${it.key?' key':''}" data-k="${k}"><span class="box"></span>
+      <span class="ct">${it.t}${it.s?`<span class="cs">${it.s}</span>`:''}</span></div>`;
+  });
+  return h+'</div>';
+}
+function lines(arr,nb){
+  if(!arr||!arr.length) return '';
+  return `<div class="lines${nb?' nb':''}">`+arr.map(([t,x,c])=>
+    `<span class="tag${c?' '+c:''}">${t}</span><span class="txt">${x}</span>`).join('')+'</div>';
+}
+const altTxt = D => (D.highTxt||D.high.toLocaleString()+'m');
+
+/* ═══ 海拔圖 ═══ */
+function chart(){
+  const pts=DAYS.map(x=>x.sleep||500), n=pts.length, L=20,R=980;
+  const x=i=>L+i*(R-L)/(n-1), y=a=>260-(a/5200)*240;
+  let line=''; pts.forEach((a,i)=>{line+=(i?' L':'M')+x(i).toFixed(1)+','+y(a).toFixed(1);});
+  const area=line+` L${R},260 L${L},260 Z`;
+  const ebc=8, ex=x(ebc), ey=y(5200);
+  const fc=['#1F4F7A','#F5F1E7','#A33B34','#2C6E5B','#C99A2E'];
+  let flags='';
+  for(let s=-1;s<=1;s+=2){
+    flags+=`<path class="cord" d="M${ex},${ey-2} L${(ex+s*118).toFixed(1)},${(ey+66).toFixed(1)}"/>`;
+    for(let k=0;k<5;k++){const f=.18+k*.16, px=ex+s*f*118, py=ey+f*66;
+      flags+=`<rect x="${(px-4).toFixed(1)}" y="${py.toFixed(1)}" width="8" height="10" fill="${fc[k]}"${k===1?' stroke="rgba(43,36,29,0.3)" stroke-width="0.5"':''}/>`;}
+  }
+  let dots=''; [0,2,4,8,12,14].forEach(i=>{
+    dots+=`<circle class="edot${i===ebc?' peak':''}" cx="${x(i).toFixed(1)}" cy="${y(pts[i]).toFixed(1)}" r="${i===ebc?5.5:4}"/>`;});
+  let here='';
+  if(CUR>=0){const cx=x(CUR).toFixed(1), cy=y(pts[CUR]).toFixed(1);
+    here=`<circle class="here" cx="${cx}" cy="${cy}" r="11"/><circle class="here" cx="${cx}" cy="${cy}" r="16" opacity="0.35"/>
+      <text class="ax" x="${cx}" y="${(y(pts[CUR])-22).toFixed(1)}" text-anchor="middle" fill="#7A2E32">你在這</text>`;}
+  return `<div class="chart-card"><p class="label">海拔曲線 · 過夜點</p>
+    <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="全程過夜海拔曲線，最高點為9月2日珠峰大本營5200公尺">
+    <line x1="20" y1="260" x2="980" y2="260" stroke="rgba(43,36,29,0.22)" stroke-width="1"/>
+    <path class="elevfill" d="${area}"/><path class="elev" d="${line}"/>${flags}${dots}${here}
+    <text class="pkl" x="${ex.toFixed(1)}" y="${(ey-10).toFixed(1)}" text-anchor="middle">珠峰大本營</text>
+    <text class="ax" x="20" y="280" text-anchor="start">8/25 成都</text>
+    <text class="ax" x="${x(2).toFixed(1)}" y="280" text-anchor="middle">8/27 林芝</text>
+    <text class="ax" x="${x(4).toFixed(1)}" y="280" text-anchor="middle">8/29 拉薩</text>
+    <text class="ax" x="${ex.toFixed(1)}" y="280" text-anchor="middle">9/2 EBC</text>
+    <text class="ax" x="${x(12).toFixed(1)}" y="280" text-anchor="middle">9/6 拉薩</text>
+    <text class="ax" x="980" y="280" text-anchor="end">9/8 桃園</text>
+    <text class="ax" x="20" y="252" text-anchor="start">500m</text>
+    <text class="ax" x="${(ex+16).toFixed(1)}" y="${(ey+4).toFixed(1)}" text-anchor="start" fill="#7D5710">5,200m</text>
+    </svg><p class="cap">曲線為每晚的過夜海拔。白天的最高點另見行程頁——白天上到 5,248m 只是短暫暴露，晚上睡 5,200m 才是壓力來源。</p></div>`;
+}
+
+/* ═══ 今日 ═══ */
+function viewToday(){
+  let h='';
+  if(PHASE==='before'){
+    h+=`<div class="big"><div class="kicker">距離出發</div>
+      <div class="countdown">${gap(TODAY,DAYS[0].d)}<small>天</small></div>
+      <div class="where" style="margin-top:10px">8/25（二）CI551 08:25 桃園 T2 → 12:00 成都雙流 T1</div>
+      ${checks('prep',PREP,`行前準備 · 未完成 ${prepLeft()} 項`)}</div>`;
+    h+=`<div class="card"><div class="ttl">待 Kira 確認</div>${
+      lines(TODOS.map(t=>['待確認',`<b>${t.t}</b>　${t.n}`,'key']),true)}</div>`;
+    h+=chart();
+  }else if(PHASE==='during'){
+    const D=DAYS[CUR], N=DAYS[CUR+1];
+    if(D.d===BDAY.d){
+      h+=`<div class="bday play"><div class="sky"><div class="fstr">${'<i></i>'.repeat(25)}</div>${STARS}
+        <div class="sky-in"><div class="kicker">${BDAY.kicker}</div><div class="bname">${BDAY.title}</div></div></div>
+        <div class="bd-in">${BDAY.msg.map(m=>`<p>${m}</p>`).join('')}</div></div>`;
+    }
+    h+=`<div class="big"><div class="kicker">${D.dn?D.dn+' · ':''}${fmt(D.d)}</div>
+      <div class="huge">${D.t}</div><div class="where">${D.s}</div>
+      <div class="altbar">
+        <div class="altbox${D.high>=4700?' peak':''}"><div class="w">當日最高</div><div class="v">${altTxt(D)}</div></div>
+        <div class="altbox"><div class="w">過夜</div><div class="v">${D.sleep?D.sleep.toLocaleString()+'m':'—'}</div></div>
+      </div>
+      ${D.hotel&&D.hotel!=='—'?`<div class="txt" style="margin-top:10px">今晚：<b>${D.hotel}</b></div>`:''}
+      ${D.tasks?checks(D.d,D.tasks,'今日待辦'):''}${lines(D.notes)}</div>`;
+    if(prepLeft()>0){
+      h+=`<div class="card" style="border-left:3px solid var(--benma)">
+        <div class="ttl">行前還有 ${prepLeft()} 項未完成</div>
+        ${checks('prep',PREP.map((p,i)=>({...p,_k:`chk:prep:${i}`})).filter(x=>store.get(x._k)!=='1'),'未完成項目')}
+        <p class="note">此卡在全部完成後會自動消失。完整清單在「備忘 → 行前準備」。</p></div>`;
+    }
+    if(N){
+      h+=`<div class="card"><div class="date">明日 · ${N.dn||''} ${fmt(N.d)}</div>
+        <div class="ttl">${N.t}</div><div class="day-s">${N.s}</div>
+        ${lines([['過夜',N.sleep?`<b>${N.sleep.toLocaleString()}m</b>`:'—'],['最高',altTxt(N)]],true)}</div>`;
+    }
+    h+=chart();
+  }else{
+    h+=`<div class="big"><div class="kicker">行程已結束</div><div class="huge">歡迎回家</div>
+      <div class="where">2026.08.25 – 09.08 · 西藏12日</div></div>`+chart();
+  }
+  return h;
+}
+
+/* ═══ 行程 ═══ */
+function viewPlan(){
+  let h=tibetMap();
+  h+=`<p class="intro"><b>D1 – D12</b>　依出團通知書。除另註明外，早餐酒店含、午晚餐自理。海拔為當日最高點與過夜點。</p>`;
+  DAYS.forEach((D,i)=>{
+    if(!D.dn) return;
+    h+=`<div class="day${D.high>=4700?' high':''}${i===CUR?' now':''}">
+      <div class="day-h"><span class="dnum">${D.dn}</span><span class="ddate">${fmt(D.d)}</span>
+        <span class="dalt">最高 ${altTxt(D)} · 宿 ${D.sleep?D.sleep.toLocaleString()+'m':'—'}</span></div>
+      <div class="day-t">${D.t}</div><div class="day-s">${D.s}</div>${lines(D.notes)}</div>`;
+  });
+  h+=`<div class="grouphd">成都自由時間 · 自理</div>`;
+  FREE.forEach(F=>{
+    h+=`<div class="day tbd"><div class="day-h"><span class="dnum">自由</span>
+      <span class="ddate">${F.d}</span><span class="dalt">${F.w}</span></div>
+      <div class="day-t">待安排</div><div class="day-s">${F.n}</div></div>`;
+  });
+  return h;
+}
+
+/* ═══ 交通 ═══ */
+function viewMove(){
+  let h=`<p class="intro"><b>8/25 → 9/8</b>　灰軌為自理段，金軌為團方接管段；橫刻處為責任交接點。</p><div class="rail">`;
+  const legs=[
+   {c:'self first',node:'',d:'8/25（二）· <em>500m</em>',t:'桃園 → 成都',
+    data:'<b>CI551</b> 08:25 TPE(T2) → 12:00 CTU雙流(T1)',pill:['ok','已出票'],
+    ln:[['住宿','亞朵S酒店（太古里春熙路）· 含2客早餐 · 退房 14:00']]},
+   {c:'self',node:'',d:'8/26（三）· <em>500m</em>',t:'春熙路 → 天府機場',
+    data:'打車至火車南站 → 地鐵18號線',pill:['ok','路線已定'],
+    ln:[['陸路','打車約 <b>25 CNY</b>／20分　·　18號線 <b>10 CNY</b>，直達車 33 分、普線 46 分　·　末班車 <b>23:30</b>'],
+        ['住宿','地鐵出站即 GTC，步行 5 分鐘到 Joyhub 悅享酒店']]},
+   {c:'tour shift',node:'',d:'8/27（四）· D1 · <em>2,900m</em>',t:'成都天府 → 林芝米林',
+    data:'<b>3U6671</b> 天府T2 07:55 → 10:00',pill:['ok','已出票'],
+    ln:[['證件','入藏函在 <b>T2 櫃檯 G06</b> 領取（方勤 15756281629）· 不得拍照或轉發','key'],
+        ['住宿','Joyhub 步行 5 分鐘到航站樓 · 自助早餐 05:30 起'],
+        ['隨身','行動電源須有 CCC 標誌，每人限 2 個、單個 ≤100Wh、僅限隨身、不可托運','gold'],
+        ['陸路','林芝接機：導遊於機場外露天停車場舉牌']]},
+   {c:'tour',node:'tour',d:'8/28 – 9/6 · D2–D11 · <em>2,900–5,248m</em>',t:'團方包車 / 拉日鐵路',
+    data:'全程 24 小時專車',pill:['tour','團方接管'],
+    ln:[['陸路','9/4 日喀則 → 拉薩走<b>拉日鐵路</b>約 2 小時 20 分　·　9/5 納木措為 9 人座包車'],
+        ['行程','逐日內容見「行程」分頁']]},
+   {c:'tour',node:'wait',d:'9/7（一）· <em>3,650m</em>',t:'拉薩 → 貢嘎機場',
+    data:'團方送機 · 航廈 <b>T3</b>',pill:['wait','待確認'],
+    ln:[['陸路','酒店在堆龍德慶區，車程約 1 小時；出發時間需 Kira 確認']]},
+   {c:'self shift',node:'',d:'9/7（一）· D12 · <em>→ 500m</em>',t:'貢嘎 → 成都',
+    data:'<b>3U8686</b> 11:00 LXA(T3) → 13:10 CTU雙流(T1)',pill:['ok','已出票'],
+    ln:[['住宿','太古里城際酒店 · 午後與晚上為成都自由時間']]},
+   {c:'self last',node:'',d:'9/8（二）',t:'成都 → 桃園',
+    data:'<b>CI552</b> 13:10 CTU雙流(T1) → 16:55 TPE(T2)',pill:['ok','已出票'],
+    ln:[['提醒','國際線建議提前 2 小時報到，約 11:10 前抵達 T1']]}
+  ];
+  legs.forEach(L=>{
+    h+=`<div class="leg ${L.c}"><span class="node ${L.node}"></span><div class="card">
+      <div class="date">${L.d}</div><div class="ttl">${L.t}</div>
+      <div class="row"><span class="data">${L.data}</span><span class="pill ${L.pill[0]}">${L.pill[1]}</span></div>
+      ${lines(L.ln)}</div></div>`;
+  });
+  return h+'</div>';
+}
+
+/* ═══ 住宿 ═══ */
+function viewStay(){
+  let h=`<p class="intro"><b>全程 14 晚</b>　地址可一鍵複製給司機看，有電話的可直接撥打。</p><div class="stay">`;
+  HOTELS.forEach(H=>{
+    const now=(PHASE==='during'&&TODAY>=H.from&&TODAY<=H.to)?' now':'';
+    h+=`<div class="stay-row${now}"><div class="stay-d">${H.d}${now?'　·　今晚':''}</div>
+      <div class="stay-n">${H.n}</div><div class="stay-m">${H.a}${H.m?' · '+H.m:''}</div>
+      <div class="acts"><span class="act" data-copy="${esc(H.a)}">複製地址</span>
+      ${H.tel?`<a class="act call" href="tel:${H.tel}">撥打 ${H.tel}</a>`:''}</div></div>`;
+  });
+  return h+'</div>';
+}
+
+/* ═══ 備忘 ═══ */
+function viewMemo(){
+  let h='';
+
+  h+=`<details class="sos" open><summary>緊急處置<span class="sn">先讀這個</span></summary><div class="dbody">
+    <div class="panel"><h4>唯一確定有效的處置</h4>
+      <ol class="steps">
+        <li class="first"><b>立即下降海拔。</b>不是吸氧、不是加藥、不是休息一晚看看。下降 500–1,000m 通常就有明顯改善。</li>
+        <li><b>告知導遊</b>——他有調車與下撤的權限，也熟悉最近的下撤路線。不要為了不掃興而隱瞞症狀。</li>
+        <li>吸氧與藥物可以爭取時間，但<b>不能取代下降</b>。</li>
+        <li>症狀未緩解前<b>不要繼續上升</b>，也不要獨自睡覺。</li>
+      </ol>
     </div>
-    <p class="intro">灰軌為自理段，金軌為團方接管段；橫刻處為責任交接點。</p>
-
-    <div class="rail">
-
-      <div class="leg self first">
-        <span class="node"></span>
-        <div class="card">
-          <div class="date">8/25（二）· <em>500m</em></div>
-          <div class="ttl">桃園 → 成都</div>
-          <div class="row">
-            <span class="data"><b>CI551</b> 08:25 TPE(T2) → 12:00 CTU雙流(T1)</span>
-            <span class="pill ok">已出票</span>
-          </div>
-          <div class="lines">
-            <span class="tag">住宿</span><span class="txt">亞朵S酒店（太古里春熙路）· 含2客早餐 · 退房 14:00</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="leg self">
-        <span class="node"></span>
-        <div class="card">
-          <div class="date">8/26（三）· <em>500m</em></div>
-          <div class="ttl">春熙路 → 天府機場</div>
-          <div class="row">
-            <span class="data">打車至火車南站 → 地鐵18號線</span>
-            <span class="pill ok">路線已定</span>
-          </div>
-          <div class="lines">
-            <span class="tag">陸路</span><span class="txt">打車約 <b>25 CNY</b>／20分　·　18號線 <b>10 CNY</b>，直達車 33 分、普線 46 分　·　末班車 <b>23:30</b></span>
-            <span class="tag">住宿</span><span class="txt">地鐵出站即 GTC，步行 5 分鐘到 Joyhub 悅享酒店</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="leg tour shift">
-        <span class="node"></span>
-        <div class="card">
-          <div class="date">8/27（四）· D1 · <em>2,900m</em></div>
-          <div class="ttl">成都天府 → 林芝米林</div>
-          <div class="row">
-            <span class="data"><b>3U6671</b> 天府T2 07:55 → 10:00</span>
-            <span class="pill ok">已出票</span>
-          </div>
-          <div class="lines">
-            <span class="tag key">證件</span><span class="txt">入藏函在 <b>T2 櫃檯 G06</b> 領取（方勤 15756281629）· 不得拍照或轉發</span>
-            <span class="tag">住宿</span><span class="txt">Joyhub 步行 5 分鐘到航站樓 · 自助早餐 05:30 起</span>
-            <span class="tag gold">隨身</span><span class="txt">行動電源須有 CCC 標誌，每人限 2 個、單個 ≤100Wh，僅限隨身、不可托運、機上不得使用</span>
-            <span class="tag">陸路</span><span class="txt">林芝接機：導遊於機場外露天停車場舉牌</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="leg tour">
-        <span class="node tour"></span>
-        <div class="card">
-          <div class="date">8/28 – 9/6 · D2–D11 · <em>2,900–5,200m</em></div>
-          <div class="ttl">團方包車 / 拉日鐵路</div>
-          <div class="row">
-            <span class="data">全程 24 小時專車</span>
-            <span class="pill tour">團方接管</span>
-          </div>
-          <div class="lines">
-            <span class="tag">陸路</span><span class="txt">9/4 日喀則 → 拉薩走<b>拉日鐵路</b>約 2 小時 20 分　·　9/5 納木措為 9 人座包車</span>
-            <span class="tag">行程</span><span class="txt">逐日內容見下方「行程」章節</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="leg tour">
-        <span class="node wait"></span>
-        <div class="card">
-          <div class="date">9/7（一）· <em>3,650m</em></div>
-          <div class="ttl">拉薩 → 貢嘎機場</div>
-          <div class="row">
-            <span class="data">團方送機 · 航廈 <b>T3</b></span>
-            <span class="pill wait">待確認</span>
-          </div>
-          <div class="lines">
-            <span class="tag">陸路</span><span class="txt">酒店在堆龍德慶區，離市區有距離，車程約 1 小時；出發時間需 Kira 確認</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="leg self shift">
-        <span class="node"></span>
-        <div class="card">
-          <div class="date">9/7（一）· D12 · <em>→ 500m</em></div>
-          <div class="ttl">貢嘎 → 成都</div>
-          <div class="row">
-            <span class="data"><b>3U8686</b> 11:00 LXA(T3) → 13:10 CTU雙流(T1)</span>
-            <span class="pill ok">已出票</span>
-          </div>
-          <div class="lines">
-            <span class="tag">住宿</span><span class="txt">太古里城際酒店 · 下午與晚上為成都自由時間</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="leg self last">
-        <span class="node"></span>
-        <div class="card">
-          <div class="date">9/8（二）</div>
-          <div class="ttl">成都 → 桃園</div>
-          <div class="row">
-            <span class="data"><b>CI552</b> 13:10 CTU雙流(T1) → 16:55 TPE(T2)</span>
-            <span class="pill ok">已出票</span>
-          </div>
-        </div>
-      </div>
-
+    <div class="panel"><h4>腦水腫警訊 · HACE</h4>
+      <div class="fact bad"><span>步態</span><span>無法沿直線行走</span></div>
+      <div class="fact"><span>意識</span><span>混亂、行為異常、答話怪異</span></div>
+      <div class="fact"><span>頭痛</span><span>劇烈且伴隨嘔吐</span></div>
+      <div class="fact"><span>嗜睡</span><span>叫不太醒</span></div>
+      <p class="note"><b>步態測試：</b>沿地面一條直線走 5 公尺。走不直就當作腦水腫處理，立即下撤，不要再觀察。</p>
     </div>
-  </section>
-
-  <section>
-    <div class="benma">
-      <div class="benma-row"><h2>行程</h2><span class="n">D1 – D12</span></div>
-      <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="panel"><h4>肺水腫警訊 · HAPE</h4>
+      <div class="fact bad"><span>呼吸</span><span>休息時仍喘、平躺更喘</span></div>
+      <div class="fact"><span>咳嗽</span><span>乾咳轉為有痰，或帶血絲泡沫</span></div>
+      <div class="fact"><span>膚色</span><span>嘴唇或指甲發紫</span></div>
+      <div class="fact"><span>胸部</span><span>胸悶、呼吸有雜音</span></div>
+      <p class="note">丹木斯<b>不預防</b>腦水腫與肺水腫。這兩種是致命的，處置方式一樣：下降海拔。</p>
     </div>
-    <p class="intro">依出團通知書。除另註明外，早餐酒店含、午晚餐自理。海拔標示為當日最高點與過夜點。</p>
+    <div class="panel"><h4>就醫</h4>
+      <div class="fact"><span>中國急救專線</span><span>120</span></div>
+      <div class="fact"><span>拉薩</span><span>西藏自治區人民醫院（高原病）</span></div>
+      <div class="fact"><span>日喀則</span><span>日喀則市人民醫院</span></div>
+      <p class="note">EBC 與日喀則之間路程長、醫療資源有限，所以判斷要早不要晚。地接社緊急聯絡見下方「聯絡」。</p>
+    </div></div></details>`;
 
-    <div class="day">
-      <div class="day-h"><span class="dnum">D1</span><span class="ddate">8/27（四）</span><span class="dalt">宿 林芝 2,900m</span></div>
-      <div class="day-t">林芝接機</div>
-      <div class="day-s">低海拔進藏，24 小時專車接送。當日不排景點，休息為主。</div>
-      <div class="lines">
-        <span class="tag key">用藥</span><span class="txt">丹木斯已服用第 4 天。抵達後避免劇烈活動、不洗頭洗澡、早睡</span>
-        <span class="tag">用餐</span><span class="txt">三餐皆自理</span>
-      </div>
-    </div>
-
-    <div class="day high">
-      <div class="day-h"><span class="dnum">D2</span><span class="ddate">8/28（五）</span><span class="dalt">最高 4,728m · 宿 2,900m</span></div>
-      <div class="day-t">林芝 → 魯朗 → 林芝</div>
-      <div class="day-s">色季拉山 · 遠眺南迦巴瓦峰 · 魯朗林海觀景臺 · 扎西崗村 · 魯朗小鎮騎馬射箭 · 國道318紀念碑</div>
-      <div class="lines">
-        <span class="tag key">高度</span><span class="txt">色季拉山 <b>4,728m</b>，是進藏後第一個 4,500m 以上暴露，但當晚回 2,900m 睡</span>
-        <span class="tag">現金</span><span class="txt">騎馬射箭可能有自費項目</span>
-      </div>
-    </div>
-
-    <div class="day">
-      <div class="day-h"><span class="dnum">D3</span><span class="ddate">8/29（六）</span><span class="dalt">宿 拉薩 3,650m</span></div>
-      <div class="day-t">林芝 → 巴松措 → 拉薩</div>
-      <div class="day-s">巴松措 · 秀巴古堡</div>
-      <div class="lines">
-        <span class="tag key">高度</span><span class="txt">睡眠海拔由 2,900m 升至 <b>3,650m</b>，當晚起注意頭痛與睡眠品質</span>
-        <span class="tag">住宿</span><span class="txt">拉薩希爾頓惠庭（羅布林卡店），彌散式供氧</span>
-      </div>
-    </div>
-
-    <div class="day">
-      <div class="day-h"><span class="dnum">D4</span><span class="ddate">8/30（日）</span><span class="dalt">最高 3,725m · 宿 3,650m</span></div>
-      <div class="day-t">拉薩一日</div>
-      <div class="day-s">布達拉宮 · 大昭寺 · 藥王山觀景臺 · 八廓街 · 布宮景觀下午茶</div>
-      <div class="lines">
-        <span class="tag">拍攝</span><span class="txt">藏服城市街拍日 — 八廓街、藥王山觀景臺（50元人民幣鈔票取景處）</span>
-        <span class="tag">用餐</span><span class="txt">含布宮景觀下午茶</span>
-        <span class="tag">現金</span><span class="txt">大昭寺功德箱、布施需小鈔</span>
-      </div>
-    </div>
-
-    <div class="day">
-      <div class="day-h"><span class="dnum">D5</span><span class="ddate">8/31（一）</span><span class="dalt">宿 拉薩 3,650m</span></div>
-      <div class="day-t">拉薩一日</div>
-      <div class="day-s">扎基寺 · 色拉寺</div>
-      <div class="lines">
-        <span class="tag">拍攝</span><span class="txt">藏服草原拍攝日 — 色拉寺辯經後，約 15:00 起</span>
-        <span class="tag">提醒</span><span class="txt">色拉寺辯經多在下午舉行，週日與法會期間可能停辦；此日為<b>週一</b>，風險低</span>
-      </div>
-    </div>
-
-    <div class="day high">
-      <div class="day-h"><span class="dnum">D6</span><span class="ddate">9/01（二）</span><span class="dalt">最高 5,560m · 宿 日喀則 3,840m</span></div>
-      <div class="day-t">拉薩 → 日喀則</div>
-      <div class="day-s">雅江河谷觀景臺 · 羊卓雍措 · 卡若拉冰川 · 白居寺</div>
-      <div class="lines">
-        <span class="tag key">高度</span><span class="txt">卡若拉冰川 <b>5,560m</b> 為全程最高點位，但僅路邊短暫停留；羊湖 4,441m</span>
-        <span class="tag">陸路</span><span class="txt">全日車程長，翻越數個山口，備暈車藥</span>
-      </div>
-    </div>
-
-    <div class="day high">
-      <div class="day-h"><span class="dnum">D7</span><span class="ddate">9/02（三）</span><span class="dalt">最高 5,198m · 宿 EBC 5,200m</span></div>
-      <div class="day-t">日喀則 → 珠峰大本營</div>
-      <div class="day-s">加烏拉山口 · 絨布寺 · 珠峰大本營</div>
-      <div class="lines">
-        <span class="tag key">用藥</span><span class="txt">第二次服藥提前至 <b>15:00–16:00</b>，降低夜間利尿</span>
-        <span class="tag key">高度</span><span class="txt">全程唯一在 5,000m 以上過夜的一晚。頭燈、保暖外套放伸手可及處</span>
-        <span class="tag">住宿</span><span class="txt">帳篷標間，無供氧；帳篷拆除時轉珠峰山腳四星酒店</span>
-        <span class="tag">現金</span><span class="txt">訊號不穩，掃碼可能失敗</span>
-      </div>
-    </div>
-
-    <div class="day high">
-      <div class="day-h"><span class="dnum">D8</span><span class="ddate">9/03（四）</span><span class="dalt">最高 5,252m · 宿 日喀則 3,840m</span></div>
-      <div class="day-t">珠峰大本營 → 日喀則</div>
-      <div class="day-s">嘉措拉山口觀景臺 · 薩迦寺</div>
-      <div class="lines">
-        <span class="tag key">高度</span><span class="txt">嘉措拉山口 <b>5,252m</b>，本日之後開始持續下降</span>
-        <span class="tag">用餐</span><span class="txt">早餐為簡易早（帳篷營地供應）</span>
-      </div>
-    </div>
-
-    <div class="day">
-      <div class="day-h"><span class="dnum">D9</span><span class="ddate">9/04（五）</span><span class="dalt">宿 拉薩 3,650m</span></div>
-      <div class="day-t">日喀則 → 拉薩</div>
-      <div class="day-s">扎什倫布寺 · 拉日鐵路</div>
-      <div class="lines">
-        <span class="tag">陸路</span><span class="txt">拉日鐵路約 2 小時 20 分，可休息</span>
-        <span class="tag">現金</span><span class="txt">扎什倫布寺布施需小鈔</span>
-      </div>
-    </div>
-
-    <div class="day high">
-      <div class="day-h"><span class="dnum">D10</span><span class="ddate">9/05（六）</span><span class="dalt">最高 5,190m · 宿 拉薩 3,650m</span></div>
-      <div class="day-t">納木措一日</div>
-      <div class="day-s">那根拉山口 · 納木措湖 4,718m　（含房、車、導、票）</div>
-      <div class="lines">
-        <span class="tag key">用藥</span><span class="txt">丹木斯療程末日；本日之後可停藥</span>
-        <span class="tag">陸路</span><span class="txt">9 人座包車，單程約 3.5 小時</span>
-      </div>
-    </div>
-
-    <div class="day">
-      <div class="day-h"><span class="dnum">D11</span><span class="ddate">9/06（日）</span><span class="dalt">最高 4,300m · 宿 拉薩 3,650m</span></div>
-      <div class="day-t">甘丹寺一日</div>
-      <div class="day-s">甘丹寺（含房、車、導、票）</div>
-      <div class="lines">
-        <span class="tag">現金</span><span class="txt">當晚為西藏最後一夜，小費宜於此時交付</span>
-      </div>
-    </div>
-
-    <div class="day">
-      <div class="day-h"><span class="dnum">D12</span><span class="ddate">9/07（一）</span><span class="dalt">→ 成都 500m</span></div>
-      <div class="day-t">拉薩送機</div>
-      <div class="day-s">團方送至貢嘎機場 T3；另 2 位送火車站</div>
-      <div class="lines">
-        <span class="tag">提醒</span><span class="txt">酒店距市區遠、11:00 起飛，早上不安排市區行程</span>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="benma">
-      <div class="benma-row"><h2>住宿</h2><span class="n">14 晚</span></div>
-      <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="stay">
-      <div class="stay-row">
-        <div class="stay-d">8/25</div>
-        <div class="stay-n">亞朵S酒店（太古里春熙路）</div>
-        <div class="stay-m">錦江區正科甲巷48號1棟 · 退房 14:00</div>
-      </div>
-      <div class="stay-row">
-        <div class="stay-d">8/26</div>
-        <div class="stay-n">Joyhub 悅享酒店</div>
-        <div class="stay-m">航站樓內，連通 GTC 與 T1／T2，步行5分鐘 · 早餐 05:30 起 · 訂單 1749262648</div>
-      </div>
-      <div class="stay-row">
-        <div class="stay-d">8/27–8/28</div>
-        <div class="stay-n">林芝宇拓路希爾頓惠庭</div>
-        <div class="stay-m">八一鎮阿傑路289號 · +86-894-5982222 · 無供氧</div>
-      </div>
-      <div class="stay-row">
-        <div class="stay-d">8/29–8/31</div>
-        <div class="stay-n">拉薩希爾頓惠庭（羅布林卡店）</div>
-        <div class="stay-m">堆龍德慶區頓珠金融城 · +86-891-6067777 · 彌散式供氧</div>
-      </div>
-      <div class="stay-row">
-        <div class="stay-d">9/01</div>
-        <div class="stay-n">日喀則希爾頓</div>
-        <div class="stay-m">桑珠孜區上海中路12號 · +86-892-8855888 · 彌散式供氧</div>
-      </div>
-      <div class="stay-row ebc">
-        <div class="stay-d">9/02</div>
-        <div class="stay-n">珠峰大本營 帳篷標間</div>
-        <div class="stay-m">絨布寺西北335米 · 5,200m · 無供氧 · 帳篷拆除時轉珠峰山腳四星酒店</div>
-      </div>
-      <div class="stay-row">
-        <div class="stay-d">9/03</div>
-        <div class="stay-n">日喀則希爾頓</div>
-        <div class="stay-m">桑珠孜區上海中路12號 · 彌散式供氧</div>
-      </div>
-      <div class="stay-row">
-        <div class="stay-d">9/04–9/06</div>
-        <div class="stay-n">拉薩希爾頓惠庭（羅布林卡店）</div>
-        <div class="stay-m">通知書已載明 9/05、9/06 為希爾頓（另2位為瑞吉）</div>
-      </div>
-      <div class="stay-row">
-        <div class="stay-d">9/07</div>
-        <div class="stay-n">太古里城際酒店</div>
-        <div class="stay-m">成都市區 · 自理</div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="benma">
-      <div class="benma-row"><h2>高原用藥</h2><span class="n">丹木斯 250mg × 45顆</span></div>
-      <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-
+  h+=`<details><summary>血氧判讀<span class="sn">參考範圍</span></summary><div class="dbody">
     <div class="panel">
-      <h4>每日服法</h4>
+      <div class="fact"><span>平地 500m</span><span>96–99%</span></div>
+      <div class="fact"><span>林芝 2,900m</span><span>90–94%</span></div>
+      <div class="fact"><span>拉薩 3,650m</span><span>88–92%</span></div>
+      <div class="fact"><span>日喀則 3,840m</span><span>86–91%</span></div>
+      <div class="fact hi"><span>EBC 5,200m</span><span>75–85%</span></div>
+      <p class="note">這些只是適應後的常見範圍，個人差異很大。<b>重點是趨勢與症狀併看</b>——休息狀態下持續往下掉，或數值偏低又同時頭痛、喘不過氣，才是警訊。單看一個低數字沒有意義，數字漂亮但走不直更危險。出發前先在台灣量一次基準值。</p>
+    </div></div></details>`;
+
+  h+=`<details><summary>尚待確認<span class="sn">${TODOS.length} 項</span></summary><div class="dbody">${
+    TODOS.map(t=>`<div class="todo"><div class="todo-t">${t.t}</div><div class="todo-n">${t.n}</div><span class="todo-w">${t.w}</span></div>`).join('')
+  }</div></details>`;
+
+  h+=`<details><summary>高原用藥<span class="sn">丹木斯 250mg × 45顆</span></summary><div class="dbody">
+    <div class="panel"><h4>每日服法</h4>
       <div class="dose">
         <div class="dose-cell"><div class="dose-w">早 08:00</div><div class="dose-a">半顆 · 125mg</div></div>
         <div class="dose-cell"><div class="dose-w">晚 20:00</div><div class="dose-a">半顆 · 125mg</div></div>
@@ -557,95 +803,130 @@
       <div class="fact"><span>療程</span><span>8/24 – 9/05　共 13 天</span></div>
       <div class="fact"><span>兩人用量</span><span>26 顆</span></div>
       <div class="fact hi"><span>剩餘備用</span><span>19 顆</span></div>
-      <p class="note">提前於 <b>8/24</b> 開始，等同在台灣做三天耐受測試——若出現磺胺過敏或無法忍受的副作用，人還在國內可就醫處理。需備切藥器，一次只切 2–3 天的量。</p>
+      <p class="note">提前於 <b>8/24</b> 開始，等同在台灣做三天耐受測試——若出現磺胺過敏或無法忍受的副作用，人還在國內可就醫。</p>
       <p class="note"><b>9/02 珠峰大本營：</b>第二次服藥提前至 15:00–16:00，降低夜間利尿。</p>
     </div>
-
-    <div class="panel">
-      <h4>升劑量的觸發條件</h4>
+    <div class="panel"><h4>升劑量的觸發條件</h4>
       <div class="fact"><span>頭痛</span><span>止痛藥壓不下來</span></div>
       <div class="fact"><span>腸胃</span><span>噁心、食慾明顯變差</span></div>
       <div class="fact"><span>呼吸</span><span>走幾步就異常喘</span></div>
       <div class="fact"><span>睡眠</span><span>夜裡頻繁醒來、睡不著</span></div>
       <div class="fact"><span>血氧</span><span>休息狀態下持續偏低</span></div>
-      <p class="note">任一項出現 → 改為<b>整顆早晚各一次（250mg BID）</b>，並告知導遊。全程不喝酒、不使用安眠藥。</p>
+      <p class="note">任一項出現 → 改為<b>整顆早晚各一次（250mg BID）</b>，並告知導遊。全程不喝酒、不使用安眠藥。若出現步態不穩或休息時仍喘，直接看「緊急處置」。</p>
     </div>
-  </section>
+    <div class="panel"><h4>氧氣瓶</h4>
+      <p class="note" style="border-top:none;padding-top:0;margin-top:0">旅行社不販售。台灣不需準備，也無法從淘寶寄送——<b>到拉薩當地藥局或超市購買即可</b>，價格約 20–800 CNY（小罐隨身型到大罐皆有）。</p>
+    </div></div></details>`;
 
-  <section>
-    <div class="benma">
-      <div class="benma-row"><h2>現金與支付</h2><span class="n">建議 2,500–3,000 CNY</span></div>
-      <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="panel">
-      <h4>必須現金的項目</h4>
+  h+=`<details><summary>現金與支付<span class="sn">2,500–3,000 CNY</span></summary><div class="dbody">
+    <div class="panel"><h4>必須現金的項目</h4>
       <div class="fact hi"><span>司機＋導遊小費</span><span>1,200 CNY（60/人/日 × 10 × 2）</span></div>
-      <div class="fact"><span>寺廟布施</span><span>200–400 CNY 小鈔（1／5／10 元）</span></div>
+      <div class="fact"><span>寺廟布施</span><span>200–400 CNY 小鈔</span></div>
       <div class="fact"><span>景點廁所</span><span>0.5–1 CNY 零錢</span></div>
       <div class="fact"><span>珠峰大本營</span><span>訊號不穩，掃碼可能失敗</span></div>
       <p class="note">小費已扣除 D1 接機日與 D12 送機日。<b>現金仍建議備至 1,440</b>，臨場想加不會卡住；宜於 D11 晚間一次交付。</p>
-      <p class="note">支付寶／微信綁台灣信用卡<b>僅能向商家掃碼付款，無法個人轉帳或發紅包</b>，所以小費只能付現。單筆超過 200 CNY 會加收 3%，能拆單就拆單。8/25–8/26 在成都先各自試刷幾筆小額。人民幣直接在台灣的銀行換，不必繞美金。</p>
+      <p class="note">支付寶／微信綁台灣信用卡<b>僅能向商家掃碼付款，無法個人轉帳或發紅包</b>，所以小費只能付現。單筆超過 200 CNY 加收 3%，能拆單就拆單。人民幣直接在台灣的銀行換，不必繞美金。</p>
     </div>
-  </section>
+    <div class="panel"><h4>台幣對照</h4>
+      <div class="fact"><span>尾款 22,804 CNY</span><span>約 NT$109,500</span></div>
+      <div class="fact"><span>小費 1,200 CNY</span><span>約 NT$5,760</span></div>
+      <div class="fact"><span>現金 3,000 CNY</span><span>約 NT$14,400</span></div>
+      <p class="note">以 7 月群組討論時的 <b>1 CNY ≈ NT$4.8</b> 試算。文件中無匯率記載，<b>實際以匯款或換匯當日匯率為準</b>。</p>
+    </div></div></details>`;
 
-  <section>
-    <div class="benma">
-      <div class="benma-row"><h2>尚待確認</h2><span class="n">3 項</span></div>
-      <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
+  h+=`<details id="dt-etiquette"><summary>寺院與拍照禮儀<span class="sn">通則</span></summary><div class="dbody">
+    <div class="panel">
+      <div class="fact"><span>殿內</span><span>一律禁止拍照攝影</span></div>
+      <div class="fact"><span>繞行</span><span>一律順時針，不可逆行</span></div>
+      <div class="fact"><span>觸碰</span><span>勿碰佛像、經書、法器</span></div>
+      <div class="fact"><span>指向</span><span>不可用手指指佛像，改用手掌朝上</span></div>
+      <div class="fact"><span>衣著</span><span>進殿脫帽，避免短褲短裙</span></div>
+      <div class="fact"><span>拍人</span><span>拍僧人或當地藏民須先徵得同意</span></div>
+      <p class="note">適用於布達拉宮、大昭寺、扎基寺、色拉寺、白居寺、絨布寺、薩迦寺、扎什倫布寺、甘丹寺。庭院與外觀通常可拍，殿內一律不行。<b>若不確定就先問導遊。</b></p>
+    </div></div></details>`;
 
-    <div class="todo">
-      <div class="todo-t">尾款 CNY 22,804 支付截止日</div>
-      <div class="todo-n">合約載明「行程出發前7日內」，但未指明基準日（8/25 桃園出發 或 8/27 西藏集合）。需向 Kira 確認精確日期與匯款帳號。</div>
-      <span class="todo-w">最急 · 今日內確認</span>
-    </div>
+  h+=`<details><summary>聯絡<span class="sn">${CONTACTS.length} 組</span></summary><div class="dbody">${
+    CONTACTS.map(C=>`<div class="contact"><div class="c-role">${C.r}</div><div class="c-name">${C.n}</div>
+      <div class="c-num">${C.v}</div><div class="c-note">${C.note}</div>
+      ${C.tel?`<div class="acts"><a class="act call" href="tel:${C.tel}">撥打</a><span class="act" data-copy="${C.v}">複製號碼</span></div>`:''}</div>`).join('')
+  }</div></details>`;
 
-    <div class="todo">
-      <div class="todo-t">G06 櫃檯開櫃 / 方勤到場時間</div>
-      <div class="todo-n">通知書未載明。影響 8/27 早上何時出門——太早去可能空等，太晚去會壓縮報到時間。與尾款一併向 Kira 確認。</div>
-      <span class="todo-w">出發前</span>
-    </div>
+  h+=`<details><summary>行前準備<span class="sn" id="prepSn">${prepLeft()} 項未完成</span></summary><div class="dbody">
+    ${checks('prep',PREP,`共 ${PREP.length} 項`)}</div></details>`;
 
-    <div class="todo">
-      <div class="todo-t">9/7 送機出發時間</div>
-      <div class="todo-n">11:00 起飛、貢嘎機場距市區約 1 小時，且住宿在堆龍德慶區。需 Kira 確認實際出發時間，以便安排早餐與行李。</div>
-      <span class="todo-w">出發前</span>
-    </div>
-  </section>
+  return h;
+}
 
-  <section>
-    <div class="benma">
-      <div class="benma-row"><h2>聯絡</h2><span class="n">3 組</span></div>
-      <div class="discs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="contacts">
-      <div class="contact">
-        <div class="c-role">承辦窗口</div>
-        <div class="c-name">Kira｜旅遊訂製</div>
-        <div class="c-num">LINE</div>
-        <div class="c-note">合約 ECSH260512JWYVLX</div>
-      </div>
-      <div class="contact">
-        <div class="c-role">機場入藏函交付</div>
-        <div class="c-name">方勤</div>
-        <div class="c-num">15756281629</div>
-        <div class="c-note">8/27 天府機場 T2 · 櫃檯 G06</div>
-      </div>
-      <div class="contact">
-        <div class="c-role">地接社緊急聯絡</div>
-        <div class="c-name">Linger Liao</div>
-        <div class="c-num">+86-159-9185-3693</div>
-        <div class="c-note">国旅环球（北京）国际旅行社</div>
-      </div>
-    </div>
-  </section>
+/* ═══ 渲染 ═══ */
+const TABS=[
+ {id:'today',label:'今日',el:'v-today',fn:viewToday},
+ {id:'plan', label:'行程',el:'v-plan', fn:viewPlan},
+ {id:'move', label:'交通',el:'v-move', fn:viewMove},
+ {id:'stay', label:'住宿',el:'v-stay', fn:viewStay},
+ {id:'memo', label:'備忘',el:'v-memo', fn:viewMemo}
+];
+let active=store.get('tab')||'today';
+if(!TABS.some(t=>t.id===active)) active='today';
 
-  <footer>
-    <span>資料來源：出團通知書 / 電子機票 / 訂房確認 / 旅行社合約</span>
-    <span>2026.08.19 更新</span>
-  </footer>
+function badgeCount(){
+  if(PHASE==='before') return prepLeft();
+  if(PHASE==='during'){
+    const t=DAYS[CUR].tasks?DAYS[CUR].tasks.filter((_,i)=>store.get(`chk:${DAYS[CUR].d}:${i}`)!=='1').length:0;
+    return t+prepLeft();
+  }
+  return 0;
+}
+function renderNav(){
+  const b=badgeCount();
+  document.getElementById('nav').innerHTML=TABS.map(t=>
+    `<button data-tab="${t.id}" class="${t.id===active?'on':''}"><span class="mk"></span>${t.label}${
+      t.id==='today'&&b?`<span class="badge">${b}</span>`:''}</button>`).join('');
+}
+function renderAll(){
+  TABS.forEach(t=>{
+    const el=document.getElementById(t.el);
+    el.innerHTML=t.fn();
+    el.classList.toggle('on',t.id===active);
+  });
+  document.getElementById('hTitle').textContent=TABS.find(t=>t.id===active).label;
+  document.getElementById('hMeta').textContent =
+    PHASE==='before' ? `出發倒數 ${gap(TODAY,DAYS[0].d)} 天` :
+    PHASE==='during' ? `${DAYS[CUR].dn||'成都'} · ${fmt(DAYS[CUR].d)}` : '行程已結束';
+  renderNav();
+  document.getElementById('netState').textContent=navigator.onLine?'線上':'離線模式';
+  const md=document.getElementById('mapd');
+  if(md) md.addEventListener('toggle',()=>store.set('mapOpen',md.open?'1':'0'));
+}
 
-</div>
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('[data-tab]');
+  if(tab){active=tab.dataset.tab;store.set('tab',active);renderAll();window.scrollTo(0,0);return;}
+  const jp=e.target.closest('[data-jump]');
+  if(jp){
+    active='memo';store.set('tab',active);renderAll();window.scrollTo(0,0);
+    const d=document.getElementById('dt-etiquette');
+    if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start',behavior:'smooth'}),60);}
+    return;
+  }
+  const cp=e.target.closest('[data-copy]');
+  if(cp){copyText(cp.dataset.copy);return;}
+  const chk=e.target.closest('.chk');
+  if(chk){
+    const on=chk.classList.toggle('done');
+    store.set(chk.dataset.k,on?'1':'0');
+    renderNav();
+    const sn=document.getElementById('prepSn');
+    if(sn) sn.textContent=prepLeft()+' 項未完成';
+    return;
+  }
+});
+window.addEventListener('online', ()=>document.getElementById('netState').textContent='線上');
+window.addEventListener('offline',()=>document.getElementById('netState').textContent='離線模式');
 
+renderAll();
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
 </body>
 </html>
