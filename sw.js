@@ -1,11 +1,12 @@
-const CACHE = 'tibet12-v5';
+const CACHE = 'tibet12-v6';
 const CORE = [
   './',
   './index.html',
   './manifest.json',
   './icon-180.png',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './robots.txt'
 ];
 
 self.addEventListener('install', e => {
