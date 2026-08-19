@@ -28,6 +28,7 @@
     --line:rgba(43,36,29,0.16); --line-soft:rgba(43,36,29,0.09);
     --f1:#1F4F7A; --f2:#F5F1E7; --f3:#A33B34; --f4:#2C6E5B; --f5:#C99A2E;
     --nav-h:58px;
+    --fs-body:13.5px; --fs-data:13px; --fs-task:13.5px; --fs-sub:12px; --fs-where:14px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
@@ -56,7 +57,7 @@
 
   main{max-width:720px;margin:0 auto;padding:16px 18px calc(var(--nav-h) + env(safe-area-inset-bottom) + 34px);}
   .view{display:none;} .view.on{display:block;}
-  .intro{font-size:12.5px;color:var(--ink-dim);font-weight:300;margin:0 0 14px;}
+  .intro{font-size:var(--fs-body);color:var(--ink-dim);font-weight:400;margin:0 0 14px;}
   .intro b{color:var(--ink);font-weight:500;}
   .card{background:var(--paper);border:1px solid var(--line);padding:13px 15px;}
   .card + .card{margin-top:10px;}
@@ -65,7 +66,7 @@
   .big{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--benma);padding:18px 16px 16px;margin-bottom:12px;}
   .big .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--benma);text-transform:uppercase;margin-bottom:8px;}
   .big .huge{font-family:'Noto Serif TC',serif;font-weight:700;font-size:29px;line-height:1.15;margin:0 0 6px;letter-spacing:.01em;}
-  .big .where{font-size:14px;color:var(--ink-dim);font-weight:300;margin-bottom:14px;}
+  .big .where{font-size:var(--fs-where);color:var(--ink-dim);font-weight:400;margin-bottom:14px;}
   .altbar{display:flex;gap:10px;flex-wrap:wrap;}
   .altbox{flex:1;min-width:130px;background:rgba(43,36,29,0.05);padding:9px 12px;}
   .altbox .w{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-dim);letter-spacing:.08em;}
@@ -84,16 +85,16 @@
   .chk.done .box{background:var(--malachite);border-color:var(--malachite);}
   .chk.done.key .box{background:var(--benma);border-color:var(--benma);}
   .chk.done .box::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #FBF8F2;border-width:0 2px 2px 0;transform:rotate(42deg);}
-  .chk .ct{font-size:13.5px;line-height:1.5;}
+  .chk .ct{font-size:var(--fs-task);line-height:1.55;}
   .chk.done .ct{color:var(--ink-dim);text-decoration:line-through;text-decoration-color:rgba(43,36,29,0.3);}
-  .chk .cs{display:block;font-size:11.5px;color:var(--ink-dim);font-weight:300;margin-top:1px;text-decoration:none;}
+  .chk .cs{display:block;font-size:var(--fs-sub);color:var(--ink-dim);font-weight:400;margin-top:2px;text-decoration:none;}
 
   .lines{margin-top:11px;padding-top:11px;border-top:1px solid var(--line-soft);display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:start;}
   .lines.nb{border-top:none;padding-top:0;margin-top:8px;}
   .tag{font-size:11px;font-weight:500;letter-spacing:.14em;padding:2px 6px 2px 7px;white-space:nowrap;background:rgba(43,36,29,0.07);color:var(--ink-dim);margin-top:2px;}
   .tag.key{background:rgba(122,46,50,0.11);color:var(--benma);}
   .tag.gold{background:rgba(181,129,28,0.2);color:var(--gold-ink);}
-  .txt{font-size:12.5px;color:var(--ink-dim);font-weight:300;}
+  .txt{font-size:var(--fs-body);color:var(--ink-dim);font-weight:400;}
   .txt b{color:var(--ink);font-weight:500;}
 
   /* ── 行程 ── */
@@ -107,7 +108,7 @@
   .ddate{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.04em;}
   .dalt{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold-ink);margin-left:auto;}
   .day-t{font-family:'Noto Serif TC',serif;font-weight:500;font-size:15.5px;letter-spacing:.02em;}
-  .day-s{font-size:13px;color:var(--ink-dim);font-weight:300;margin-top:3px;}
+  .day-s{font-size:var(--fs-body);color:var(--ink-dim);font-weight:400;margin-top:3px;}
   .grouphd{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);}
 
   /* ── 交通軌 ── */
@@ -124,8 +125,11 @@
   .date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.05em;margin-bottom:3px;}
   .date em{font-style:normal;color:var(--gold-ink);}
   .ttl{font-family:'Noto Serif TC',serif;font-weight:500;font-size:15.5px;margin-bottom:7px;letter-spacing:.02em;}
+  .ttlrow{display:flex;align-items:baseline;gap:10px;flex-wrap:nowrap;}
+  .ttlrow .ttl{margin-bottom:7px;flex:1;min-width:0;}
+  .ttlrow .pill{flex:0 0 auto;margin-left:0;}
   .row{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;}
-  .data{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-dim);}
+  .data{font-family:'IBM Plex Mono',monospace;font-size:var(--fs-data);color:var(--ink-dim);}
   .data b{color:var(--ink);font-weight:500;}
   .pill{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;padding:3px 8px;margin-left:auto;text-transform:uppercase;}
   .pill.ok{background:rgba(44,110,91,0.14);color:var(--green-ink);}
@@ -139,7 +143,7 @@
   .stay-row.now{background:rgba(122,46,50,0.05);margin:0 -15px;padding-left:12px;padding-right:15px;border-left:3px solid var(--benma);}
   .stay-d{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--benma);letter-spacing:.03em;}
   .stay-n{font-size:14px;font-weight:500;margin-top:1px;}
-  .stay-m{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);margin-top:3px;line-height:1.5;}
+  .stay-m{font-family:'IBM Plex Mono',monospace;font-size:var(--fs-sub);color:var(--ink-dim);margin-top:4px;line-height:1.55;}
   .acts{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
   .act{font-size:11.5px;letter-spacing:.06em;padding:5px 11px;border:1px solid var(--line);background:rgba(43,36,29,0.04);color:var(--ink);text-decoration:none;cursor:pointer;}
   .act.call{border-color:rgba(122,46,50,0.4);color:var(--benma);}
@@ -153,15 +157,15 @@
   .dose-cell{background:rgba(43,36,29,0.05);padding:10px 12px;}
   .dose-w{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-dim);letter-spacing:.07em;}
   .dose-a{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:500;color:var(--benma);}
-  .fact{display:flex;justify-content:space-between;gap:14px;font-size:13px;padding:7px 0;border-bottom:1px solid var(--line-soft);}
+  .fact{display:flex;justify-content:space-between;gap:14px;font-size:var(--fs-task);padding:7px 0;border-bottom:1px solid var(--line-soft);}
   .fact:last-of-type{border-bottom:none;}
-  .fact span:first-child{color:var(--ink-dim);font-weight:300;}
-  .fact span:last-child{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;}
+  .fact span:first-child{color:var(--ink-dim);font-weight:400;}
+  .fact span:last-child{font-family:'IBM Plex Mono',monospace;font-size:var(--fs-data);text-align:right;}
   .fact.hi span:last-child{color:var(--gold-ink);font-weight:500;}
   .fact.bad span:last-child{color:var(--benma);font-weight:500;}
-  .note{font-size:12.5px;color:var(--ink-dim);font-weight:300;margin:11px 0 0;padding-top:10px;border-top:1px solid var(--line-soft);}
+  .note{font-size:var(--fs-body);color:var(--ink-dim);font-weight:400;margin:11px 0 0;padding-top:10px;border-top:1px solid var(--line-soft);}
   .note b{color:var(--benma);font-weight:500;}
-  .steps{margin:0;padding-left:20px;font-size:13px;color:var(--ink-dim);font-weight:300;}
+  .steps{margin:0;padding-left:20px;font-size:var(--fs-task);color:var(--ink-dim);font-weight:400;}
   .steps li{padding:4px 0;}
   .steps b{color:var(--ink);font-weight:500;}
   .steps li.first{color:var(--ink);}
@@ -169,14 +173,14 @@
 
   .todo{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--benma);padding:13px 15px;margin-bottom:11px;}
   .todo-t{font-family:'Noto Serif TC',serif;font-weight:500;font-size:15px;margin-bottom:4px;}
-  .todo-n{font-size:12.5px;color:var(--ink-dim);font-weight:300;}
+  .todo-n{font-size:var(--fs-body);color:var(--ink-dim);font-weight:400;}
   .todo-w{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--benma);display:block;margin-top:7px;}
 
   .contact{background:var(--paper);border:1px solid var(--line);padding:13px 15px;margin-bottom:10px;}
   .c-role{font-size:10.5px;letter-spacing:.13em;color:var(--ink-dim);margin-bottom:5px;}
   .c-name{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:500;}
   .c-num{font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--benma);margin-top:1px;}
-  .c-note{font-size:11.5px;color:var(--ink-dim);margin-top:4px;font-weight:300;}
+  .c-note{font-size:var(--fs-sub);color:var(--ink-dim);margin-top:4px;font-weight:400;}
 
   /* ── 摺疊 ── */
   details{background:var(--paper);border:1px solid var(--line);margin-bottom:11px;}
@@ -207,7 +211,7 @@
   .edot.peak{fill:var(--benma);}
   .cord{stroke:rgba(43,36,29,0.5);stroke-width:1;fill:none;}
   .here{fill:none;stroke:var(--benma);stroke-width:2;}
-  .cap{font-size:12px;color:var(--ink-dim);margin:10px 4px 4px;font-weight:300;}
+  .cap{font-size:var(--fs-sub);color:var(--ink-dim);margin:10px 4px 4px;font-weight:400;}
 
 
   /* ── 生日 ── */
@@ -271,6 +275,19 @@
     .bday.play .fstr i,.bday.play .kicker,.bday.play .bname,.bday.play p{
       animation:none!important;opacity:1!important;transform:none!important;}
   }
+
+  /* ── 字級 ── */
+  body.fs-lg{--fs-body:15px;--fs-data:14px;--fs-task:15px;--fs-sub:13px;--fs-where:15.5px;}
+  .fsrow{display:flex;gap:9px;margin-top:4px;}
+  .fsbtn{flex:1;font-family:'Noto Serif TC',serif;font-size:14.5px;padding:11px 8px;cursor:pointer;
+    border:1px solid var(--line);background:rgba(43,36,29,0.04);color:var(--ink-dim);}
+  .fsbtn.on{background:var(--benma);border-color:var(--benma);color:#F5F1E7;}
+  .fsbtn.big{font-size:17px;}
+  .inp{width:100%;font-family:'Noto Sans TC',sans-serif;font-size:14px;padding:9px 11px;
+    border:1px solid var(--line);background:rgba(43,36,29,0.03);color:var(--ink);margin-top:5px;}
+  .inp:focus{outline:none;border-color:var(--benma);}
+  .flabel{font-size:11px;letter-spacing:.13em;color:var(--ink-dim);margin-top:12px;}
+  .flabel:first-child{margin-top:0;}
 
   /* ── 夜空 ── */
   .bday{position:relative;}
@@ -365,7 +382,8 @@ function copyText(s){
 
 /* ═══ 行程資料 ═══ */
 const WD=['日','一','二','三','四','五','六'];
-const TL='<a class="jump" data-jump="1">禮儀通則 →</a>';
+const LK=(id,t)=>`<a class="jump" data-jump="${id}">${t} →</a>`;
+const TL=LK('dt-etiquette','禮儀通則');
 const DAYS=[
  {d:'2026-08-25',dn:'',t:'桃園 → 成都',s:'CI551 08:25 TPE(T2) → 12:00 CTU雙流(T1)　·　午後起成都自由時間',
   high:500,sleep:500,hotel:'亞朵S酒店（太古里春熙路）',
@@ -384,6 +402,7 @@ const DAYS=[
          {t:'行動電源確認 CCC 標誌',s:'每人限2個、單個≤100Wh、僅限隨身、機上不得使用',key:true},
          {t:'林芝機場外露天停車場找導遊'},
          {t:'抵達後休息，不洗頭洗澡、不劇烈活動',s:'進藏第一晚最關鍵'},
+         {t:'先讀一次緊急處置',s:'要在需要之前讀，不是出事才翻　'+LK('dt-sos','緊急處置'),key:true},
          {t:'丹木斯 早晚各半顆',s:'療程第 4 天',key:true}],
   notes:[['用餐','三餐皆自理']]},
  {d:'2026-08-28',dn:'D2',t:'林芝 → 魯朗 → 林芝',s:'色季拉山 · 遠眺南迦巴瓦峰 · 魯朗林海觀景臺 · 扎西崗村 · 魯朗小鎮騎馬射箭 · 國道318紀念碑',
@@ -393,7 +412,8 @@ const DAYS=[
          ['現金','騎馬射箭可能有自費項目']]},
  {d:'2026-08-29',dn:'D3',t:'林芝 → 巴松措 → 拉薩',s:'巴松措 · 秀巴古堡',
   high:5013,highTxt:'約 4,750–5,013m',sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
-  tasks:[{t:'丹木斯 早晚各半顆',key:true}],
+  tasks:[{t:'今晚首次睡 3,650m',s:'頭痛或睡不好就看升劑量觸發條件　'+LK('dt-med','高原用藥'),key:true},
+         {t:'丹木斯 早晚各半顆',key:true}],
   notes:[['高度','此段需翻越米拉山：走林拉高速為<b>米拉山隧道約 4,750m</b>，走舊318國道為<b>米拉山口 5,013m</b>。不是平順日','key'],
          ['高度','當晚睡眠海拔由 2,900m 升至 <b>3,650m</b>，注意頭痛與睡眠品質','key'],
          ['住宿','彌散式供氧']]},
@@ -402,12 +422,14 @@ const DAYS=[
   tasks:[{t:'布達拉宮安檢：禁帶液體、打火機、刀具',s:'殿內禁止拍照；紅宮參觀限時約 1 小時，跟緊導遊',key:true},
          {t:'今天有藏服城市街拍（已預約）',s:'八廓街、藥王山觀景臺（50元人民幣背面取景處）'},
          {t:'備小鈔給大昭寺功德箱'},
+         {t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
          {t:'丹木斯 早晚各半顆',key:true}],
   notes:[['用餐','含布宮景觀下午茶'],
          ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
  {d:'2026-08-31',dn:'D5',t:'拉薩一日',s:'扎基寺 · 色拉寺',
   high:3700,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
   tasks:[{t:'今天有藏服草原拍攝（已預約）',s:'色拉寺辯經後，約 15:00 起'},
+         {t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
          {t:'丹木斯 早晚各半顆',key:true}],
   notes:[['提醒','色拉寺辯經多在下午舉行，週日與法會期間可能停辦；此日為<b>週一</b>，風險低'],
          ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
@@ -415,6 +437,7 @@ const DAYS=[
   high:5020,sleep:3840,hotel:'日喀則希爾頓',
   tasks:[{t:'在日喀則補齊零食與飲水',s:'EBC 沒有商店，帳篷營地只有熱水'},
          {t:'與犛牛、藏獒合照要收費，先問價再拍'},
+         {t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
          {t:'丹木斯 早晚各半顆',key:true}],
   notes:[['高度','崗巴拉山口 4,990m、羊湖 4,441m、<b>卡若拉冰川觀景台約 5,020m</b>（常見的 5,560m 是冰川本身高度，不是路面）'],
          ['陸路','全日車程長，翻越數個山口，備暈車藥'],
@@ -425,7 +448,9 @@ const DAYS=[
          {t:'頭燈、保暖外套放伸手可及處',s:'夜間如廁在帳篷外，5,200m、0–5°C',key:true},
          {t:'白天正常補水，睡前2小時起減量'},
          {t:'留足現金',s:'訊號不穩，掃碼可能失敗'},
-         {t:'不可越過界碑禁區',s:'無人機需許可，實務上多禁飛'}],
+         {t:'不可越過界碑禁區',s:'無人機需許可，實務上多禁飛'},
+         {t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
+         {t:'再看一次緊急處置與血氧判讀',s:'今晚沒有退路，判斷要早不要晚　'+LK('dt-sos','緊急處置'),key:true}],
   notes:[['生日','阿玫在全程最高的地方長一歲','gold'],
          ['高度','<b>全程唯一在 5,000m 以上過夜的一晚</b>','key'],
          ['住宿','帳篷標間，無供氧；帳篷拆除時轉珠峰山腳四星酒店'],
@@ -433,13 +458,15 @@ const DAYS=[
          ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
  {d:'2026-09-03',dn:'D8',t:'珠峰大本營 → 日喀則',s:'嘉措拉山口觀景臺 · 薩迦寺',
   high:5248,sleep:3840,hotel:'日喀則希爾頓',
-  tasks:[{t:'丹木斯 早晚各半顆',key:true}],
+  tasks:[{t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
+         {t:'丹木斯 早晚各半顆',key:true}],
   notes:[['高度','嘉措拉山口 <b>約 5,248m</b>，是全程最高的點位；本日之後開始持續下降'],
          ['用餐','早餐為簡易早（帳篷營地供應）'],
          ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
  {d:'2026-09-04',dn:'D9',t:'日喀則 → 拉薩',s:'扎什倫布寺 · 拉日鐵路',
   high:3840,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
-  tasks:[{t:'丹木斯 早晚各半顆',key:true}],
+  tasks:[{t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
+         {t:'丹木斯 早晚各半顆',key:true}],
   notes:[['陸路','拉日鐵路約 2 小時 20 分，可休息'],['現金','扎什倫布寺布施需小鈔'],
          ['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
  {d:'2026-09-05',dn:'D10',t:'納木措一日',s:'那根拉山口 · 納木措湖 4,718m（含房、車、導、票）',
@@ -449,7 +476,8 @@ const DAYS=[
   notes:[['陸路','9 人座包車，單程約 3.5 小時']]},
  {d:'2026-09-06',dn:'D11',t:'甘丹寺一日',s:'甘丹寺 約 4,300m（含房、車、導、票）',
   high:4300,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
-  tasks:[{t:'交付司機與導遊小費 1,200 CNY',s:'西藏最後一夜，用信封一次交付',key:true},
+  tasks:[{t:'交付司機與導遊小費 1,200 CNY',s:'西藏最後一夜，用信封一次交付　'+LK('dt-cash','現金與支付'),key:true},
+         {t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
          {t:'整理行李，隔日 11:00 起飛'}],
   notes:[['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
  {d:'2026-09-07',dn:'D12',t:'拉薩 → 成都',s:'團方送機至貢嘎 T3　·　3U8686 11:00 LXA(T3) → 13:10 CTU雙流(T1)',
@@ -482,7 +510,9 @@ const PREP=[
  {t:'常備藥包',s:'暈車藥（D6 全日盤山）、止痛藥、腸胃藥、止瀉藥'},
  {t:'濕紙巾／乾洗手',s:'EBC 帳篷無法洗澡'},
  {t:'保溫瓶',s:'高原需持續補水，熱水優於冷水'},
- {t:'列印一張紙本備份',s:'入藏函資訊、緊急電話、飯店地址、航班編號'}
+ {t:'列印一張紙本備份',s:'入藏函資訊、緊急電話、飯店地址、航班編號'},
+ {t:'讀過一次「緊急處置」',s:'高山症警訊要在出發前就知道，不是到現場學',key:true},
+ {t:'用飛航模式測過 App 離線可用',s:'加到主畫面後，把五個分頁點過一遍再測'}
 ];
 
 const HOTELS=[
@@ -730,8 +760,9 @@ function viewMove(){
   ];
   legs.forEach(L=>{
     h+=`<div class="leg ${L.c}"><span class="node ${L.node}"></span><div class="card">
-      <div class="date">${L.d}</div><div class="ttl">${L.t}</div>
-      <div class="row"><span class="data">${L.data}</span><span class="pill ${L.pill[0]}">${L.pill[1]}</span></div>
+      <div class="date">${L.d}</div>
+      <div class="ttlrow"><span class="ttl">${L.t}</span><span class="pill ${L.pill[0]}">${L.pill[1]}</span></div>
+      <div class="row"><span class="data">${L.data}</span></div>
       ${lines(L.ln)}</div></div>`;
   });
   return h+'</div>';
@@ -754,7 +785,7 @@ function viewStay(){
 function viewMemo(){
   let h='';
 
-  h+=`<details class="sos" open><summary>緊急處置<span class="sn">先讀這個</span></summary><div class="dbody">
+  h+=`<details class="sos" id="dt-sos" open><summary>緊急處置<span class="sn">先讀這個</span></summary><div class="dbody">
     <div class="panel"><h4>唯一確定有效的處置</h4>
       <ol class="steps">
         <li class="first"><b>立即下降海拔。</b>不是吸氧、不是加藥、不是休息一晚看看。下降 500–1,000m 通常就有明顯改善。</li>
@@ -784,7 +815,7 @@ function viewMemo(){
       <p class="note">EBC 與日喀則之間路程長、醫療資源有限，所以判斷要早不要晚。地接社緊急聯絡見下方「聯絡」。</p>
     </div></div></details>`;
 
-  h+=`<details><summary>血氧判讀<span class="sn">參考範圍</span></summary><div class="dbody">
+  h+=`<details id="dt-spo2"><summary>血氧判讀<span class="sn">參考範圍</span></summary><div class="dbody">
     <div class="panel">
       <div class="fact"><span>平地 500m</span><span>96–99%</span></div>
       <div class="fact"><span>林芝 2,900m</span><span>90–94%</span></div>
@@ -798,7 +829,7 @@ function viewMemo(){
     TODOS.map(t=>`<div class="todo"><div class="todo-t">${t.t}</div><div class="todo-n">${t.n}</div><span class="todo-w">${t.w}</span></div>`).join('')
   }</div></details>`;
 
-  h+=`<details><summary>高原用藥<span class="sn">丹木斯 250mg × 45顆</span></summary><div class="dbody">
+  h+=`<details id="dt-med"><summary>高原用藥<span class="sn">丹木斯 250mg × 45顆</span></summary><div class="dbody">
     <div class="panel"><h4>每日服法</h4>
       <div class="dose">
         <div class="dose-cell"><div class="dose-w">早 08:00</div><div class="dose-a">半顆 · 125mg</div></div>
@@ -822,7 +853,7 @@ function viewMemo(){
       <p class="note" style="border-top:none;padding-top:0;margin-top:0">旅行社不販售。台灣不需準備，也無法從淘寶寄送——<b>到拉薩當地藥局或超市購買即可</b>，價格約 20–800 CNY（小罐隨身型到大罐皆有）。</p>
     </div></div></details>`;
 
-  h+=`<details><summary>現金與支付<span class="sn">2,500–3,000 CNY</span></summary><div class="dbody">
+  h+=`<details id="dt-cash"><summary>現金與支付<span class="sn">2,500–3,000 CNY</span></summary><div class="dbody">
     <div class="panel"><h4>必須現金的項目</h4>
       <div class="fact hi"><span>司機＋導遊小費</span><span>1,200 CNY（60/人/日 × 10 × 2）</span></div>
       <div class="fact"><span>寺廟布施</span><span>200–400 CNY 小鈔</span></div>
@@ -849,14 +880,42 @@ function viewMemo(){
       <p class="note">適用於布達拉宮、大昭寺、扎基寺、色拉寺、白居寺、絨布寺、薩迦寺、扎什倫布寺、甘丹寺。庭院與外觀通常可拍，殿內一律不行。<b>若不確定就先問導遊。</b></p>
     </div></div></details>`;
 
-  h+=`<details><summary>聯絡<span class="sn">${CONTACTS.length} 組</span></summary><div class="dbody">${
+  h+=`<details id="dt-contact"><summary>聯絡<span class="sn">${CONTACTS.length} 組</span></summary><div class="dbody">${
     CONTACTS.map(C=>`<div class="contact"><div class="c-role">${C.r}</div><div class="c-name">${C.n}</div>
       <div class="c-num">${C.v}</div><div class="c-note">${C.note}</div>
       ${C.tel?`<div class="acts"><a class="act call" href="tel:${C.tel}">撥打</a><span class="act" data-copy="${C.v}">複製號碼</span></div>`:''}</div>`).join('')
-  }</div></details>`;
+  }
+    <div class="contact">
+      <div class="c-role">D1 見面後自行填寫</div>
+      <div class="flabel">導遊 姓名／手機</div>
+      <input class="inp" data-f="guide" placeholder="例：次仁 138xxxxxxxx" value="${(store.get('f:guide')||'').replace(/"/g,'&quot;')}">
+      <div class="flabel">司機 姓名／手機</div>
+      <input class="inp" data-f="driver" placeholder="例：札西 139xxxxxxxx" value="${(store.get('f:driver')||'').replace(/"/g,'&quot;')}">
+      <div class="flabel">車牌號碼</div>
+      <input class="inp" data-f="plate" placeholder="例：藏A·xxxxx" value="${(store.get('f:plate')||'').replace(/"/g,'&quot;')}">
+      <div class="acts" id="fActs">${
+        ['guide','driver','plate'].map(k=>{
+          const v=store.get('f:'+k)||'';
+          if(!v) return '';
+          const tel=(v.match(/[\d\-+]{8,}/)||[''])[0].replace(/[^\d+]/g,'');
+          return tel?`<a class="act call" href="tel:${tel}">撥打 ${tel}</a>`:`<span class="act" data-copy="${v.replace(/"/g,'&quot;')}">複製 ${v}</span>`;
+        }).join('')}</div>
+      <p class="note">只存在這支手機，不會上傳。緊急處置提到的「告知導遊」就是打這裡。</p>
+    </div>
+  </div></details>`;
 
   h+=`<details><summary>行前準備<span class="sn" id="prepSn">${prepLeft()} 項未完成</span></summary><div class="dbody">
     ${checks('prep',PREP,`共 ${PREP.length} 項`)}</div></details>`;
+
+  const lg=store.get('fs')==='lg';
+  h+=`<details id="dt-disp"><summary>顯示<span class="sn">${lg?'大':'標準'}</span></summary><div class="dbody">
+    <div class="panel"><h4>字級</h4>
+      <div class="fsrow">
+        <button class="fsbtn${lg?'':' on'}" data-fs="std">標準</button>
+        <button class="fsbtn big${lg?' on':''}" data-fs="lg">大</button>
+      </div>
+      <p class="note">只放大內文與待辦，標題與版面不變。設定只存在這支手機，兩人可各自調整。</p>
+    </div></div></details>`;
 
   return h;
 }
@@ -907,9 +966,19 @@ document.addEventListener('click',e=>{
   if(tab){active=tab.dataset.tab;store.set('tab',active);renderAll();window.scrollTo(0,0);return;}
   const jp=e.target.closest('[data-jump]');
   if(jp){
+    const id=jp.dataset.jump;
     active='memo';store.set('tab',active);renderAll();window.scrollTo(0,0);
-    const d=document.getElementById('dt-etiquette');
+    const d=document.getElementById(id);
     if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start',behavior:'smooth'}),60);}
+    return;
+  }
+  const fs=e.target.closest('[data-fs]');
+  if(fs){
+    const lg=fs.dataset.fs==='lg';
+    store.set('fs',lg?'lg':'std');
+    document.body.classList.toggle('fs-lg',lg);
+    renderAll();
+    const d=document.getElementById('dt-disp');if(d)d.open=true;
     return;
   }
   const cp=e.target.closest('[data-copy]');
@@ -924,9 +993,20 @@ document.addEventListener('click',e=>{
     return;
   }
 });
+document.addEventListener('input',e=>{
+  const f=e.target.closest('[data-f]');
+  if(f) store.set('f:'+f.dataset.f, f.value);
+});
+document.addEventListener('change',e=>{
+  const f=e.target.closest('[data-f]');
+  if(f){ store.set('f:'+f.dataset.f, f.value); const d=document.getElementById('dt-disp');
+    active='memo'; renderAll();
+    const c=document.getElementById('dt-contact'); if(c) c.open=true; }
+});
 window.addEventListener('online', ()=>document.getElementById('netState').textContent='線上');
 window.addEventListener('offline',()=>document.getElementById('netState').textContent='離線模式');
 
+if(store.get('fs')==='lg') document.body.classList.add('fs-lg');
 renderAll();
 if('serviceWorker' in navigator && location.protocol==='https:'){
   window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));

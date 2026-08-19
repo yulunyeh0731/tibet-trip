@@ -1,4 +1,4 @@
-const CACHE = 'tibet12-v6';
+const CACHE = 'tibet12-v8';
 const CORE = [
   './',
   './index.html',
