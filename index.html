@@ -1,6 +1,6 @@
 <!--
   入藏 · 西藏12日 — BUILD NOTES（交接用，不影響顯示）
-  最後更新：2026-08-20　｜　sw.js 快取版本：tibet12-v8
+  最後更新：2026-08-20　｜　sw.js 快取版本：tibet12-v10
 
   【結構】單一 index.html，五分頁（今日/行程/交通/住宿/備忘），純 JS 渲染、
   無框架、無外部資料庫。資料全部寫死在 script 標籤內的常數（DAYS/HOTELS/
@@ -25,13 +25,20 @@
     連到「禮儀通則」、D1提醒連到「緊急處置」
   - 離線：service worker 快取全部靜態資源；noindex+robots.txt 防搜尋引擎收錄
 
-  【已知未完成 / 討論到一半】
-  - 行程頁高海拔警示：目前只有一級（當日最高≥4700m 左邊框）。曾討論
-    改兩級（白天暴露細邊 vs 過夜海拔顯著升高/≥5000m 粗邊+底色染紅），
-    尚未實作。使用者問過「為什麼有的有紅邊有的沒有」，需要在行程頁
-    intro 補一句圖例說明，不管有沒有做兩級都該補。
-  - 成都自由時間三格（8/25午後、8/26全日、9/07午後）目前是「待安排」
-    佔位，等使用者提供內容後要一併填 DAYS 或 FREE 常數並同步「今日」頁。
+  【v10 這次改了什麼】
+  - 高海拔警示改兩級，函式見 altLevel(D,i)：
+    lv2（過夜警戒）＝過夜點≥4,500m，或過夜點≥3,000m且比前一晚升幅>500m
+    lv1（白天暴露）＝當日最高≥4,700m 但當晚降回較低處睡
+    算出來 D3、D7 是 lv2，D2/D6/D8/D10 是 lv1，其餘不標。行程頁 intro
+    下方加了圖例（.legend）。今日頁 altbox 沒有跟著動，peak 樣式仍是
+    原本「當日最高≥4700」的判斷，這次沒有一併同步，如果之後想改也是
+    可以，只是這次先只動行程頁。
+  - 成都自由時間三格（8/25午後、8/26全日、9/07午後）已填入內容，走
+    「大概區域＋建議＋小吃」的鬆散寫法，刻意不寫死鐘點時間，因為不是
+    跟旅行團、想保留彈性。細節在 FREE 常數裡。
+
+  【已知未完成】
+  （目前沒有未完成項目，下次有新討論再補這裡）
 
   【尚待 Kira 確認，一旦有答案要同步進 App】
   - 尾款 CNY 22,804 支付截止日與匯款帳號（最急）
@@ -152,9 +159,16 @@
 
   /* ── 行程 ── */
   .day{background:var(--paper);border:1px solid var(--line);padding:13px 15px;margin-bottom:10px;}
-  .day.high{border-left:3px solid var(--benma);}
+  .day.lv1{border-left:3px solid rgba(122,46,50,0.32);}
+  .day.lv2{border-left:4px solid var(--benma);}
+  .day.lv2 .dalt{color:var(--benma);font-weight:500;}
   .day.now{border:1px solid var(--benma);border-left:3px solid var(--benma);box-shadow:0 0 0 3px rgba(122,46,50,0.10);}
   .day.tbd{border-style:dashed;}
+  .legend{font-size:var(--fs-sub);color:var(--ink-dim);font-weight:400;display:flex;gap:16px;
+    flex-wrap:wrap;margin:0 0 14px;padding:8px 11px;background:rgba(43,36,29,0.04);}
+  .legend i{display:inline-block;width:3px;height:12px;vertical-align:-2px;margin-right:5px;}
+  .legend .l1 i{background:rgba(122,46,50,0.32);}
+  .legend .l2 i{background:var(--benma);}
   .day-h{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px;}
   .dnum{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;background:rgba(122,46,50,0.11);color:var(--benma);padding:1px 7px;}
   .day.now .dnum{background:var(--benma);color:#F5F1E7;}
@@ -544,9 +558,23 @@ const DAYS=[
 ];
 
 const FREE=[
- {d:'8/25（二）',w:'午後 12:00 起',n:'落地成都後，太古里／春熙路一帶'},
- {d:'8/26（三）',w:'全日至傍晚',n:'亞朵S 退房 14:00，行李可寄前台'},
- {d:'9/07（一）',w:'13:10 落地後',n:'午後與晚間，太古里城際酒店周邊'}
+ {d:'8/25（二）',w:'午後起',t:'落地日・市區慢逛＋太古里晚餐',
+  n:'12:00 落地雙流T1，進市區約1.5小時，這天不用早起，時間最寬裕',
+  ln:[['動線','亞朵S 放行李 → 人民公園鶴鳴茶社 → 寬窄巷子，含轉乘約20–30分'],
+      ['小吃','路邊排隊小攤直接吃：肥腸粉、軍屯鍋魁、糖油果子、三大炮，不用特地找店','gold'],
+      ['晚餐','回太古里、春熙路吃頓重口味，下高原前最後機會']]},
+ {d:'8/26（三）',w:'全日',t:'熊貓基地',
+  n:'亞朵S 退房 14:00，行李可寄前台',
+  ln:[['交通','春熙路站搭3號線直達熊貓大道站，不用轉車；A出口有免費接駁車或打車約¥50','key'],
+      ['建議','早去，動物上午較活躍'],
+      ['傍晚','打車至火車南站 → 18號線，含轉乘抓90分，17:00前出發較穩','gold'],
+      ['提醒','隔天07:55的飛機，Joyhub早餐05:30起，晚上別玩太晚']]},
+ {d:'9/07（一）',w:'13:10落地後',t:'下高原日・太古里城際周邊',
+  n:'13:10 落地雙流T1，進市區約40–60分',
+  ln:[['身體','剛從3,650m下來，別排硬行程，洗熱水澡好好休息','key'],
+      ['晚餐','火鍋或串串補回來'],
+      ['購物','伴手禮就近在太古里、春熙路'],
+      ['隔天','9/08 CI552 13:10起飛，早上整理行李來得及']]}
 ];
 
 const PREP=[
@@ -678,6 +706,15 @@ function lines(arr,nb){
     `<span class="tag${c?' '+c:''}">${t}</span><span class="txt">${x}</span>`).join('')+'</div>';
 }
 const altTxt = D => (D.highTxt||D.high.toLocaleString()+'m');
+// 高海拔警示：lv2＝過夜警戒（睡點≥4,500m，或睡點≥3,000m且比前一晚升幅>500m）
+// lv1＝白天暴露（當日最高≥4,700m但當晚降回較低處睡）
+function altLevel(D,i){
+  const prev=i>0?(DAYS[i-1].sleep||0):0;
+  const gainVal=(D.sleep||0)-prev;
+  if((D.sleep||0)>=4500||((D.sleep||0)>=3000&&gainVal>500)) return 2;
+  if((D.high||0)>=4700) return 1;
+  return 0;
+}
 
 /* ═══ 海拔圖 ═══ */
 function chart(){
@@ -764,9 +801,12 @@ function viewToday(){
 function viewPlan(){
   let h=tibetMap();
   h+=`<p class="intro"><b>D1 – D12</b>　依出團通知書。除另註明外，早餐酒店含、午晚餐自理。海拔為當日最高點與過夜點。</p>`;
+  h+=`<div class="legend"><span class="l2"><i></i>過夜警戒：睡點 ≥4,500m，或比前一晚升幅 &gt;500m</span>
+      <span class="l1"><i></i>白天暴露：上到 4,700m 以上，當晚降回較低處睡</span></div>`;
   DAYS.forEach((D,i)=>{
     if(!D.dn) return;
-    h+=`<div class="day${D.high>=4700?' high':''}${i===CUR?' now':''}">
+    const LV=altLevel(D,i);
+    h+=`<div class="day${LV?' lv'+LV:''}${i===CUR?' now':''}">
       <div class="day-h"><span class="dnum">${D.dn}</span><span class="ddate">${fmt(D.d)}</span>
         <span class="dalt">最高 ${altTxt(D)} · 宿 ${D.sleep?D.sleep.toLocaleString()+'m':'—'}</span></div>
       <div class="day-t">${D.t}</div><div class="day-s">${D.s}</div>${lines(D.notes)}</div>`;
@@ -775,7 +815,7 @@ function viewPlan(){
   FREE.forEach(F=>{
     h+=`<div class="day tbd"><div class="day-h"><span class="dnum">自由</span>
       <span class="ddate">${F.d}</span><span class="dalt">${F.w}</span></div>
-      <div class="day-t">待安排</div><div class="day-s">${F.n}</div></div>`;
+      <div class="day-t">${F.t}</div><div class="day-s">${F.n}</div>${lines(F.ln)}</div>`;
   });
   return h;
 }
