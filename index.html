@@ -1,6 +1,6 @@
 <!--
   入藏 · 西藏12日 — BUILD NOTES（交接用，不影響顯示）
-  最後更新：2026-08-20　｜　sw.js 快取版本：tibet12-v11
+  最後更新：2026-08-20　｜　sw.js 快取版本：tibet12-v12
 
   【結構】單一 index.html，五分頁（今日/行程/交通/住宿/備忘），純 JS 渲染、
   無框架、無外部資料庫。資料全部寫死在 script 標籤內的常數（DAYS/HOTELS/
@@ -31,8 +31,9 @@
     * 湖與河加水紋暈圈（.lkh1/.lkh2/.rvhalo，同一路徑疊粗細不同的描邊）
     * 非當日元素全部改中性暖褐灰，紅色只留給當日路線與當日地名
     * 紙色另開 --map-paper #F5EEE0（比 --paper 更暖），加 feTurbulence 顆粒
-    * 雙線邊框＋四角小方塊、比例尺、指北針（MDECOR 常數）
-    * 字體改襯線並拉字距；珠峰標記改金色三角
+    * 比例尺、指北針（MDECOR 常數）。原本還有雙線邊框＋四角方塊，但
+      .mapd 卡片本身已有 border，疊起來變成框中框，v12 已移除。
+    * 珠峰標記改金色三角
     * 貢嘎機場改菱形，跟景點圓點區分
   - 當日路線圓環依行進順序延遲脈動（.mping，delay = idx*0.22s），
     順便帶出行進方向。有 prefers-reduced-motion 保護，關動畫時退回靜態環。
@@ -45,11 +46,19 @@
     但改標「到當地問」，交通頁膠囊改「當地確認」，D11 加了一條待辦提醒
     當晚要問到。尚待確認區塊補了 id="dt-todo" 讓跨頁連結能跳。
 
+  【v12 修正】
+  - 地圖字級全面加大：地名 34→38、過夜地 31→35、次要 23→30、裝飾標註
+    23→27、比例尺 19→24。原因是 viewBox 1000 寬在手機上只渲染約 336px，
+    等於縮到 0.34 倍，原本 23px 的次要地名實際只有約 8px，糊掉。
+    ★ 之後任何改地圖字級的人，記得先乘 0.34 換算成實際像素再判斷。
+  - 地名字體由襯線改回 Noto Sans TC。襯線中文（宋體系）橫筆細，在這個
+    縮放比例下不可讀。襯線只留給裝飾性標註（山脈名／江名）。
+  - 地名顏色加深：次要 #8B7456→#6B5D48、過夜地 #4A3F31→#3A3228。
+  - 字距收窄（.11em→.04em），原本太鬆也是糊的原因之一。
+  - 移除 SVG 內的雙線邊框與四角方塊（框中框）。
+
   【已知未完成】
   - 山的縱向放大約 2 倍，地理比例是失真的，caption 有註明。
-  - 中文襯線字靠系統 fallback（Georgia 對中文無效，實際會落到蘋方或宋體），
-    iOS 與 Android 長相會不同。若要統一得再引一支中文襯線 webfont，但那會
-    增加離線快取體積，目前選擇不做。
 
   【尚待 Kira 確認，一旦有答案要同步進 App】
   - 尾款 CNY 22,804 支付截止日與匯款帳號（最急）
@@ -407,18 +416,16 @@
   .mping{fill:none;stroke:var(--benma);stroke-width:1.8;transform-box:fill-box;transform-origin:center;
     animation:mping 2.8s ease-out infinite;}
   @keyframes mping{0%{transform:scale(.85);opacity:.5}65%{opacity:0}100%{transform:scale(1.7);opacity:0}}
-  .mfrm{fill:none;stroke:rgba(122,46,50,0.30);stroke-width:2;}
-  .mfrm.in{stroke:rgba(122,46,50,0.15);stroke-width:1;}
-  .mcnr{fill:var(--benma);opacity:.55;}
-  .mrule{stroke:#8B7456;stroke-width:1.2;fill:none;}
-  .mlbl{font-family:Georgia,'Noto Serif TC',serif;font-size:34px;fill:var(--benma);letter-spacing:.11em;
-    paint-order:stroke;stroke:var(--map-paper);stroke-width:7;stroke-linejoin:round;}
-  .mlbl.stay{fill:#4A3F31;font-size:31px;letter-spacing:.09em;}
-  .mlbl.dim{font-size:23px;fill:#8B7456;letter-spacing:.06em;}
-  .mkey{font-family:Georgia,'Noto Serif TC',serif;font-size:23px;fill:#A08E72;letter-spacing:.46em;
-    paint-order:stroke;stroke:var(--map-paper);stroke-width:7;stroke-linejoin:round;}
-  .mkey.wtr{fill:#6E92A4;font-size:22px;letter-spacing:.3em;}
-  .mkey.sm{font-size:19px;fill:#8B7456;letter-spacing:.12em;}
+  .mrule{stroke:#8B7456;stroke-width:1.4;fill:none;}
+  .mlbl{font-family:'Noto Sans TC','PingFang TC',sans-serif;font-size:38px;font-weight:500;
+    fill:var(--benma);letter-spacing:.04em;
+    paint-order:stroke;stroke:var(--map-paper);stroke-width:8;stroke-linejoin:round;}
+  .mlbl.stay{fill:#3A3228;font-size:35px;letter-spacing:.03em;}
+  .mlbl.dim{font-size:30px;font-weight:400;fill:#6B5D48;letter-spacing:.02em;}
+  .mkey{font-family:'Noto Serif TC',Georgia,serif;font-size:27px;fill:#9A8A72;letter-spacing:.34em;
+    paint-order:stroke;stroke:var(--map-paper);stroke-width:8;stroke-linejoin:round;}
+  .mkey.wtr{fill:#5F8496;font-size:26px;letter-spacing:.24em;}
+  .mkey.sm{font-family:'Noto Sans TC',sans-serif;font-size:24px;fill:#6B5D48;letter-spacing:.1em;}
 
   /* ── 跨頁連結 ── */
   .jump{color:var(--benma);border-bottom:1px solid rgba(122,46,50,.4);cursor:pointer;
@@ -681,18 +688,14 @@ const MSTATIC=`<rect x="0" y="0" width="1000" height="880" fill="var(--map-paper
  +`<ellipse class="lkh2" cx="823.0" cy="262.8" rx="15" ry="8" stroke-width="11"/>`
  +`<ellipse class="lake" cx="823.0" cy="262.8" rx="15" ry="8"/>`
  +`<path class="peakmk" d="M132,712 L140.8,694 L149.6,712 Z"/>`
- +`<text class="mlbl dim" x="160.8" y="750.6" text-anchor="start">珠穆朗瑪 8,849m</text>`
+ +`<text class="mlbl dim" x="163" y="756" text-anchor="start">珠穆朗瑪 8,849m</text>`
  +`<text class="mkey" x="597.9" y="782" text-anchor="middle">喜馬拉雅山脈</text>`
  +`<text class="mkey wtr" x="700" y="507" text-anchor="middle">雅魯藏布江</text>`;
 const MDECOR=`<g class="mrule"><line x1="742" y1="822" x2="842" y2="822"/><line x1="742" y1="816" x2="742" y2="828"/>`
  +`<line x1="792" y1="818" x2="792" y2="826"/><line x1="842" y1="816" x2="842" y2="828"/></g>`
- +`<text class="mkey sm" x="792" y="848" text-anchor="middle">100 km</text>`
- +`<g transform="translate(62,96)"><path d="M0,-30 L7,8 L0,1 L-7,8 Z" fill="var(--benma)"/>`
- +`<text class="mkey sm" x="0" y="-40" text-anchor="middle">N</text></g>`
- +`<rect class="mfrm" x="16" y="16" width="968" height="848"/>`
- +`<rect class="mfrm in" x="25" y="25" width="950" height="830"/>`
- +`<g class="mcnr"><rect x="12" y="12" width="8" height="8"/><rect x="980" y="12" width="8" height="8"/>`
- +`<rect x="12" y="860" width="8" height="8"/><rect x="980" y="860" width="8" height="8"/></g>`;
+ +`<text class="mkey sm" x="792" y="852" text-anchor="middle">100 km</text>`
+ +`<g transform="translate(58,100)"><path d="M0,-32 L7.5,9 L0,1.5 L-7.5,9 Z" fill="var(--benma)"/>`
+ +`<text class="mkey sm" x="0" y="-42" text-anchor="middle">N</text></g>`;
 const MP={
  '林芝':{x:868.0,y:340.8,dx:0,dy:42,an:'middle',k:1},
  '魯朗':{x:906.1,y:314.0,dx:0,dy:-26,an:'middle',k:0},
@@ -700,11 +703,11 @@ const MP={
  '拉薩':{x:550.9,y:340.8,dx:-29,dy:10,an:'end',k:1},
  '甘丹寺':{x:586.1,y:318.5,dx:20,dy:-12,an:'start',k:0},
  '納木措':{x:502.9,y:102.4,dx:0,dy:-30,an:'middle',k:0},
- '羊卓雍措':{x:509.8,y:492.3,dx:20,dy:74,an:'middle',k:0},
- '江孜':{x:402.1,y:503.4,dx:-8,dy:52,an:'middle',k:0},
+ '羊卓雍措':{x:509.8,y:492.3,dx:26,dy:80,an:'middle',k:0},
+ '江孜':{x:402.1,y:503.4,dx:-14,dy:56,an:'middle',k:0},
  '日喀則':{x:331.7,y:425.4,dx:0,dy:-44,an:'middle',k:1},
  '薩迦':{x:247.5,y:507.9,dx:-26,dy:8,an:'end',k:0},
- '珠峰大本營':{x:133.0,y:675.0,dx:40,dy:8,an:'start',k:2},
+ '珠峰大本營':{x:133.0,y:675.0,dx:42,dy:9,an:'start',k:2},
  '貢嘎機場':{x:530.3,y:418.8,dx:22,dy:8,an:'start',k:0}
 };
 const MSEG=[['林芝','魯朗'],['林芝','巴松措'],['巴松措','拉薩'],['拉薩','羊卓雍措'],
