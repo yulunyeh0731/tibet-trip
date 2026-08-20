@@ -1,6 +1,6 @@
 <!--
   入藏 · 西藏12日 — BUILD NOTES（交接用，不影響顯示）
-  最後更新：2026-08-20　｜　sw.js 快取版本：tibet12-v10
+  最後更新：2026-08-20　｜　sw.js 快取版本：tibet12-v11
 
   【結構】單一 index.html，五分頁（今日/行程/交通/住宿/備忘），純 JS 渲染、
   無框架、無外部資料庫。資料全部寫死在 script 標籤內的常數（DAYS/HOTELS/
@@ -25,20 +25,31 @@
     連到「禮儀通則」、D1提醒連到「緊急處置」
   - 離線：service worker 快取全部靜態資源；noindex+robots.txt 防搜尋引擎收錄
 
-  【v10 這次改了什麼】
-  - 高海拔警示改兩級，函式見 altLevel(D,i)：
-    lv2（過夜警戒）＝過夜點≥4,500m，或過夜點≥3,000m且比前一晚升幅>500m
-    lv1（白天暴露）＝當日最高≥4,700m 但當晚降回較低處睡
-    算出來 D3、D7 是 lv2，D2/D6/D8/D10 是 lv1，其餘不標。行程頁 intro
-    下方加了圖例（.legend）。今日頁 altbox 沒有跟著動，peak 樣式仍是
-    原本「當日最高≥4700」的判斷，這次沒有一併同步，如果之後想改也是
-    可以，只是這次先只動行程頁。
-  - 成都自由時間三格（8/25午後、8/26全日、9/07午後）已填入內容，走
-    「大概區域＋建議＋小吃」的鬆散寫法，刻意不寫死鐘點時間，因為不是
-    跟旅行團、想保留彈性。細節在 FREE 常數裡。
+  【v11 這次改了什麼】
+  - 地圖美術大改版，方向是「藏地朝聖圖／舊版銅刻地圖」：
+    * 山改三層退遠稜線（RIDGE_B/M/F 三組座標），不再是單一鋸齒
+    * 湖與河加水紋暈圈（.lkh1/.lkh2/.rvhalo，同一路徑疊粗細不同的描邊）
+    * 非當日元素全部改中性暖褐灰，紅色只留給當日路線與當日地名
+    * 紙色另開 --map-paper #F5EEE0（比 --paper 更暖），加 feTurbulence 顆粒
+    * 雙線邊框＋四角小方塊、比例尺、指北針（MDECOR 常數）
+    * 字體改襯線並拉字距；珠峰標記改金色三角
+    * 貢嘎機場改菱形，跟景點圓點區分
+  - 當日路線圓環依行進順序延遲脈動（.mping，delay = idx*0.22s），
+    順便帶出行進方向。有 prefers-reduced-motion 保護，關動畫時退回靜態環。
+  - 已走過的路段淡化（.mseg.past）：用 CUR 之前每天的 DROUTE 相鄰節點對
+    建 Set 比對，今日路線本身不算 past。
+  - 緊急處置改預設收合（拿掉 open）。注意：原本預設展開是刻意的，理由是
+    「要在需要之前讀」，是使用者要求改的，不是疏漏。
+  - 尾款：8/21 付款，已從 TODOS 移到 PREP 的可勾選項。
+  - 9/7 送機時間：Kira 回覆到當地與導遊討論，出發前不會有答案。TODOS 保留
+    但改標「到當地問」，交通頁膠囊改「當地確認」，D11 加了一條待辦提醒
+    當晚要問到。尚待確認區塊補了 id="dt-todo" 讓跨頁連結能跳。
 
   【已知未完成】
-  （目前沒有未完成項目，下次有新討論再補這裡）
+  - 山的縱向放大約 2 倍，地理比例是失真的，caption 有註明。
+  - 中文襯線字靠系統 fallback（Georgia 對中文無效，實際會落到蘋方或宋體），
+    iOS 與 Android 長相會不同。若要統一得再引一支中文襯線 webfont，但那會
+    增加離線快取體積，目前選擇不做。
 
   【尚待 Kira 確認，一旦有答案要同步進 App】
   - 尾款 CNY 22,804 支付截止日與匯款帳號（最急）
@@ -80,7 +91,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --earth:#E5DDCB; --paper:#FBF8F2;
+    --earth:#E5DDCB; --paper:#FBF8F2; --map-paper:#F5EEE0; --gold:#C8A44D;
     --benma:#7A2E32; --benma-deep:#571F24;
     --malachite:#2C6E5B; --orpiment:#B5811C;
     --gold-ink:#7D5710; --green-ink:#215446;
@@ -370,23 +381,44 @@
   @media (prefers-reduced-motion: reduce){ .sky .st{animation:none!important;opacity:.7!important;} }
 
   /* ── 地圖 ── */
-  .mapd{background:var(--paper);border:1px solid var(--line);margin-bottom:14px;}
+  .mapd{background:var(--map-paper);border:1px solid var(--line);margin-bottom:14px;}
   .mapd .dbody{padding:0 6px 8px;}
-  .mtn{fill:rgba(122,46,50,0.06);}
-  .crest{fill:none;stroke:rgba(122,46,50,0.45);stroke-width:4;stroke-linejoin:round;stroke-linecap:round;}
-  .river{fill:none;stroke:rgba(31,79,122,0.52);stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;}
-  .river.thin{stroke-width:3;}
-  .lake{fill:rgba(31,79,122,0.32);stroke:rgba(31,79,122,0.6);stroke-width:2.5;}
-  .peakmk{fill:var(--benma);}
-  .mseg{stroke:rgba(122,46,50,0.34);stroke-width:3.4;fill:none;stroke-linecap:round;}
-  .mseg.rail{stroke-dasharray:14 11;}
-  .mnow{stroke:var(--benma);stroke-width:7.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
-  .mpt{fill:var(--paper);stroke:var(--benma);stroke-width:3.4;}
-  .mpt.stay{fill:var(--benma);}
-  .mring{fill:none;stroke:var(--benma);stroke-width:3;opacity:.5;}
-  .mlbl{font-family:'Noto Sans TC',sans-serif;font-size:32px;font-weight:500;fill:var(--ink);}
-  .mlbl.dim{font-size:29px;fill:var(--ink-dim);font-weight:400;}
-  .mkey{font-family:'IBM Plex Mono',monospace;font-size:27px;fill:var(--ink-dim);letter-spacing:.06em;}
+  .mtn{fill:rgba(178,156,124,0.26);stroke:rgba(139,116,86,0.55);stroke-width:1.5;stroke-linejoin:round;}
+  .mtn.mid{fill:rgba(178,156,124,0.16);stroke:rgba(150,128,98,0.38);stroke-width:1.3;}
+  .crest{fill:none;stroke:rgba(150,128,98,0.30);stroke-width:1.3;stroke-linejoin:round;stroke-linecap:round;}
+  .river{fill:none;stroke:#6E92A4;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+  .river.thin{stroke-width:1.4;opacity:.75;}
+  .rvhalo{fill:none;stroke:rgba(122,152,168,0.22);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;}
+  .lake{fill:rgba(122,158,176,0.34);stroke:#6E92A4;stroke-width:1.3;}
+  .lkh1{fill:none;stroke:rgba(110,146,164,0.14);stroke-width:15;}
+  .lkh2{fill:none;stroke:rgba(110,146,164,0.22);stroke-width:7;}
+  .peakmk{fill:var(--gold);stroke:#8B7456;stroke-width:1.1;stroke-linejoin:round;}
+  .mseg{stroke:rgba(90,74,54,0.30);stroke-width:1.5;fill:none;stroke-linecap:round;}
+  .mseg.rail{stroke-dasharray:2 9;}
+  .mseg.past{stroke:rgba(90,74,54,0.13);}
+  .mnow{stroke:var(--benma);stroke-width:4.2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .mnowh{stroke:rgba(122,46,50,0.13);stroke-width:13;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .mpt{fill:var(--map-paper);stroke:rgba(90,74,54,0.5);stroke-width:1.5;}
+  .mpt.stay{fill:#8B7456;stroke:none;}
+  .mpt.on{fill:var(--map-paper);stroke:var(--benma);stroke-width:2;}
+  .mpt.on.stay{fill:var(--benma);stroke:none;}
+  .mring{fill:none;stroke:var(--benma);stroke-width:1.3;opacity:.4;}
+  .mring.ebc{stroke:rgba(90,74,54,0.32);stroke-width:1.2;opacity:1;}
+  .mping{fill:none;stroke:var(--benma);stroke-width:1.8;transform-box:fill-box;transform-origin:center;
+    animation:mping 2.8s ease-out infinite;}
+  @keyframes mping{0%{transform:scale(.85);opacity:.5}65%{opacity:0}100%{transform:scale(1.7);opacity:0}}
+  .mfrm{fill:none;stroke:rgba(122,46,50,0.30);stroke-width:2;}
+  .mfrm.in{stroke:rgba(122,46,50,0.15);stroke-width:1;}
+  .mcnr{fill:var(--benma);opacity:.55;}
+  .mrule{stroke:#8B7456;stroke-width:1.2;fill:none;}
+  .mlbl{font-family:Georgia,'Noto Serif TC',serif;font-size:34px;fill:var(--benma);letter-spacing:.11em;
+    paint-order:stroke;stroke:var(--map-paper);stroke-width:7;stroke-linejoin:round;}
+  .mlbl.stay{fill:#4A3F31;font-size:31px;letter-spacing:.09em;}
+  .mlbl.dim{font-size:23px;fill:#8B7456;letter-spacing:.06em;}
+  .mkey{font-family:Georgia,'Noto Serif TC',serif;font-size:23px;fill:#A08E72;letter-spacing:.46em;
+    paint-order:stroke;stroke:var(--map-paper);stroke-width:7;stroke-linejoin:round;}
+  .mkey.wtr{fill:#6E92A4;font-size:22px;letter-spacing:.3em;}
+  .mkey.sm{font-size:19px;fill:#8B7456;letter-spacing:.12em;}
 
   /* ── 跨頁連結 ── */
   .jump{color:var(--benma);border-bottom:1px solid rgba(122,46,50,.4);cursor:pointer;
@@ -423,7 +455,7 @@
   <div class="view" id="v-memo"></div>
   <div class="foot">
     資料來源：出團通知書 / 電子機票 / 訂房確認 / 旅行社合約<br>
-    2026.08.19 更新 · <span id="netState">—</span>
+    2026.08.20 更新 · <span id="netState">—</span>
   </div>
 </main>
 
@@ -544,6 +576,7 @@ const DAYS=[
  {d:'2026-09-06',dn:'D11',t:'甘丹寺一日',s:'甘丹寺 約 4,300m（含房、車、導、票）',
   high:4300,sleep:3650,hotel:'拉薩希爾頓惠庭（羅布林卡店）',
   tasks:[{t:'交付司機與導遊小費 1,200 CNY',s:'西藏最後一夜，用信封一次交付　'+LK('dt-cash','現金與支付'),key:true},
+         {t:'問導遊明天送機幾點出發',s:'Kira 說到當地決定，今晚一定要問到，隔天 11:00 起飛　'+LK('dt-todo','尚待確認'),key:true},
          {t:'今天有寺院行程',s:'殿內禁拍、順時針繞行、勿用手指指佛像　'+LK('dt-etiquette','禮儀通則')},
          {t:'整理行李，隔日 11:00 起飛'}],
   notes:[['寺院','殿內禁拍、順時針繞行、勿用手指指佛像　'+TL]]},
@@ -578,7 +611,7 @@ const FREE=[
 ];
 
 const PREP=[
- {t:'尾款 CNY 22,804 匯款',s:'截止日與帳號需向 Kira 確認',key:true},
+ {t:'尾款 CNY 22,804 匯款',s:'8/21（五）處理，付完打勾',key:true},
  {t:'丹木斯 8/24 起開始服用',s:'早晚各半顆（125mg），療程至 9/05',key:true},
  {t:'行動電源檢查 CCC 標誌',s:'無標誌在中國國內線會被沒收',key:true},
  {t:'人民幣現金 2,500–3,000',s:'含 400 CNY 以上的 1／5／10 元小鈔，在台灣的銀行直接換'},
@@ -609,9 +642,8 @@ const HOTELS=[
 ];
 
 const TODOS=[
- {t:'尾款 CNY 22,804 支付截止日',n:'合約載明「行程出發前7日內」，但未指明基準日（8/25 桃園出發 或 8/27 西藏集合）。需向 Kira 確認精確日期與匯款帳號。',w:'最急'},
  {t:'G06 櫃檯開櫃 / 方勤到場時間',n:'通知書未載明。影響 8/27 早上何時出門——太早去可能空等，太晚去會壓縮報到時間。',w:'出發前'},
- {t:'9/7 送機出發時間',n:'11:00 起飛、貢嘎機場距市區約 1 小時，且住宿在堆龍德慶區。需 Kira 確認實際出發時間。',w:'出發前'}
+ {t:'9/7 送機出發時間',n:'Kira 回覆：到當地與當地導遊討論後決定。出發前不會有答案，D11（9/6）晚上記得先問好隔天幾點出發。',w:'到當地問'}
 ];
 
 const CONTACTS=[
@@ -631,19 +663,48 @@ const BDAY={d:'2026-09-02',name:'阿玫',
  };
 
 /* ═══ 地圖 ═══ */
-const MSTATIC=`<path class="mtn" d="M49.8,641.6 98.7,686.1 140.8,710.6 196.6,697.3 245.5,737.4 294.5,730.7 343.4,708.4 392.3,697.3 441.3,686.1 490.2,697.3 539.1,719.5 607.6,690.6 685.9,686.1 764.2,641.6 832.7,574.7 901.3,507.9 950.2,418.8 L960.0,842.1 L40.0,842.1 Z"/><polyline class="crest" points="49.8,641.6 98.7,686.1 140.8,710.6 196.6,697.3 245.5,737.4 294.5,730.7 343.4,708.4 392.3,697.3 441.3,686.1 490.2,697.3 539.1,719.5 607.6,690.6 685.9,686.1 764.2,641.6 832.7,574.7 901.3,507.9 950.2,418.8"/><polyline class="river" points="147.7,441.0 245.5,429.9 331.7,425.4 402.1,418.8 480.4,414.3 529.4,418.8 617.4,436.6 695.7,463.3 774.0,452.2 852.3,429.9 920.8,351.9 950.2,296.2"/><polyline class="river thin" points="550.9,340.8 541.1,378.7 530.3,418.8"/><path class="lake" d="M465.7,452.2 C490.2,443.3 501.9,476.7 512.7,463.3 C526.4,447.7 541.1,499.0 532.3,530.2 C525.4,552.4 509.8,530.2 501.9,507.9 C491.2,478.9 470.6,490.1 460.8,474.5 Z"/><path class="lake" d="M456.9,124.7 C474.5,80.1 515.6,62.3 543.1,86.8 C546.0,118.0 509.8,140.3 480.4,142.5 C463.8,142.5 455.0,135.8 456.9,124.7 Z"/><ellipse class="lake" cx="823.0" cy="262.8" rx="15" ry="8"/><path class="peakmk" d="M127.8,720.6 L140.8,697.6 L153.8,720.6 Z"/><text class="mlbl dim" x="160.8" y="752.6" text-anchor="start">珠穆朗瑪 8,849m</text><text class="mkey" x="597.9" y="747.0" text-anchor="middle">喜　馬　拉　雅　山　脈</text><text class="mkey" x="695.7" y="509.3" text-anchor="middle">雅魯藏布江</text>`;
+const RIDGE_F='49.8,641.6 98.7,686.1 140.8,710.6 196.6,697.3 245.5,737.4 294.5,730.7 343.4,708.4 392.3,697.3 441.3,686.1 490.2,697.3 539.1,719.5 607.6,690.6 685.9,686.1 764.2,641.6 832.7,574.7 901.3,507.9 950.2,418.8';
+const RIDGE_M='49.8,600 98.7,628 140.8,662 196.6,640 245.5,682 294.5,668 343.4,655 392.3,640 441.3,648 490.2,632 539.1,668 607.6,635 685.9,628 764.2,590 832.7,528 901.3,462 950.2,372';
+const RIDGE_B='49.8,552 98.7,586 140.8,600 196.6,592 245.5,620 294.5,608 343.4,600 392.3,588 441.3,596 490.2,578 539.1,610 607.6,586 685.9,570 764.2,540 832.7,478 901.3,415 950.2,325';
+const RIVER='147.7,441.0 245.5,429.9 331.7,425.4 402.1,418.8 480.4,414.3 529.4,418.8 617.4,436.6 695.7,463.3 774.0,452.2 852.3,429.9 920.8,351.9 950.2,296.2';
+const LK_YAM='M465.7,452.2 C490.2,443.3 501.9,476.7 512.7,463.3 C526.4,447.7 541.1,499.0 532.3,530.2 C525.4,552.4 509.8,530.2 501.9,507.9 C491.2,478.9 470.6,490.1 460.8,474.5 Z';
+const LK_NAM='M456.9,124.7 C474.5,80.1 515.6,62.3 543.1,86.8 C546.0,118.0 509.8,140.3 480.4,142.5 C463.8,142.5 455.0,135.8 456.9,124.7 Z';
+const MSTATIC=`<rect x="0" y="0" width="1000" height="880" fill="var(--map-paper)"/>`
+ +`<rect x="0" y="0" width="1000" height="880" filter="url(#mgrain)" opacity="0.05"/>`
+ +`<polyline class="crest" points="${RIDGE_B}"/>`
+ +`<path class="mtn mid" d="M${RIDGE_M} L950.2,860 L49.8,860 Z"/>`
+ +`<path class="mtn" d="M${RIDGE_F} L950.2,860 L49.8,860 Z"/>`
+ +`<polyline class="rvhalo" points="${RIVER}"/><polyline class="river" points="${RIVER}"/>`
+ +`<polyline class="river thin" points="550.9,340.8 541.1,378.7 530.3,418.8"/>`
+ +`<path class="lkh1" d="${LK_YAM}"/><path class="lkh2" d="${LK_YAM}"/><path class="lake" d="${LK_YAM}"/>`
+ +`<path class="lkh1" d="${LK_NAM}"/><path class="lkh2" d="${LK_NAM}"/><path class="lake" d="${LK_NAM}"/>`
+ +`<ellipse class="lkh2" cx="823.0" cy="262.8" rx="15" ry="8" stroke-width="11"/>`
+ +`<ellipse class="lake" cx="823.0" cy="262.8" rx="15" ry="8"/>`
+ +`<path class="peakmk" d="M132,712 L140.8,694 L149.6,712 Z"/>`
+ +`<text class="mlbl dim" x="160.8" y="750.6" text-anchor="start">珠穆朗瑪 8,849m</text>`
+ +`<text class="mkey" x="597.9" y="782" text-anchor="middle">喜馬拉雅山脈</text>`
+ +`<text class="mkey wtr" x="700" y="507" text-anchor="middle">雅魯藏布江</text>`;
+const MDECOR=`<g class="mrule"><line x1="742" y1="822" x2="842" y2="822"/><line x1="742" y1="816" x2="742" y2="828"/>`
+ +`<line x1="792" y1="818" x2="792" y2="826"/><line x1="842" y1="816" x2="842" y2="828"/></g>`
+ +`<text class="mkey sm" x="792" y="848" text-anchor="middle">100 km</text>`
+ +`<g transform="translate(62,96)"><path d="M0,-30 L7,8 L0,1 L-7,8 Z" fill="var(--benma)"/>`
+ +`<text class="mkey sm" x="0" y="-40" text-anchor="middle">N</text></g>`
+ +`<rect class="mfrm" x="16" y="16" width="968" height="848"/>`
+ +`<rect class="mfrm in" x="25" y="25" width="950" height="830"/>`
+ +`<g class="mcnr"><rect x="12" y="12" width="8" height="8"/><rect x="980" y="12" width="8" height="8"/>`
+ +`<rect x="12" y="860" width="8" height="8"/><rect x="980" y="860" width="8" height="8"/></g>`;
 const MP={
- '林芝':{x:868.0,y:340.8,dx:0,dy:44,an:'middle',k:1},
- '魯朗':{x:906.1,y:314.0,dx:0,dy:-24,an:'middle',k:0},
- '巴松措':{x:823.0,y:262.8,dx:0,dy:-24,an:'middle',k:0},
- '拉薩':{x:550.9,y:340.8,dx:-20,dy:10,an:'end',k:1},
+ '林芝':{x:868.0,y:340.8,dx:0,dy:42,an:'middle',k:1},
+ '魯朗':{x:906.1,y:314.0,dx:0,dy:-26,an:'middle',k:0},
+ '巴松措':{x:823.0,y:262.8,dx:0,dy:-26,an:'middle',k:0},
+ '拉薩':{x:550.9,y:340.8,dx:-29,dy:10,an:'end',k:1},
  '甘丹寺':{x:586.1,y:318.5,dx:20,dy:-12,an:'start',k:0},
- '納木措':{x:502.9,y:102.4,dx:0,dy:-26,an:'middle',k:0},
- '羊卓雍措':{x:509.8,y:492.3,dx:20,dy:68,an:'middle',k:0},
- '江孜':{x:402.1,y:503.4,dx:-8,dy:46,an:'middle',k:0},
- '日喀則':{x:331.7,y:425.4,dx:0,dy:-40,an:'middle',k:1},
- '薩迦':{x:247.5,y:507.9,dx:-22,dy:8,an:'end',k:0},
- '珠峰大本營':{x:133.0,y:675.0,dx:36,dy:10,an:'start',k:2},
+ '納木措':{x:502.9,y:102.4,dx:0,dy:-30,an:'middle',k:0},
+ '羊卓雍措':{x:509.8,y:492.3,dx:20,dy:74,an:'middle',k:0},
+ '江孜':{x:402.1,y:503.4,dx:-8,dy:52,an:'middle',k:0},
+ '日喀則':{x:331.7,y:425.4,dx:0,dy:-44,an:'middle',k:1},
+ '薩迦':{x:247.5,y:507.9,dx:-26,dy:8,an:'end',k:0},
+ '珠峰大本營':{x:133.0,y:675.0,dx:40,dy:8,an:'start',k:2},
  '貢嘎機場':{x:530.3,y:418.8,dx:22,dy:8,an:'start',k:0}
 };
 const MSEG=[['林芝','魯朗'],['林芝','巴松措'],['巴松措','拉薩'],['拉薩','羊卓雍措'],
@@ -657,25 +718,48 @@ const DROUTE={
  '2026-09-06':['拉薩','甘丹寺','拉薩'],'2026-09-07':['拉薩','貢嘎機場']
 };
 function tibetMap(){
-  let segs='',pts='',lbls='',now='';
-  MSEG.forEach(([a,b,k])=>{segs+=`<line class="mseg${k?' '+k:''}" x1="${MP[a].x}" y1="${MP[a].y}" x2="${MP[b].x}" y2="${MP[b].y}"/>`;});
+  let segs='',pts='',lbls='',now='',ping='';
   const R=CUR>=0?DROUTE[DAYS[CUR].d]:null;
-  if(R&&R.length>1) now=`<polyline class="mnow" points="${R.map(n=>MP[n].x+','+MP[n].y).join(' ')}"/>`;
-  Object.entries(MP).forEach(([n,P])=>{
-    const on=R&&R.includes(n);
-    if(P.k===2) pts+=`<circle class="mring" cx="${P.x}" cy="${P.y}" r="24"/>`;
-    if(on)      pts+=`<circle class="mring" cx="${P.x}" cy="${P.y}" r="30"/>`;
-    pts+=`<circle class="mpt${P.k?' stay':''}" cx="${P.x}" cy="${P.y}" r="${P.k===2?13:(P.k?11:9)}"/>`;
-    lbls+=`<text class="mlbl${(P.k||on)?'':' dim'}" x="${P.x+P.dx}" y="${P.y+P.dy}" text-anchor="${P.an}">${n}</text>`;
+  const key=(a,b)=>[a,b].sort().join('|');
+  // 已走過的路段：今天之前每一天走過的相鄰節點對
+  const past=new Set();
+  if(CUR>0) for(let i=0;i<CUR;i++){
+    const r=DROUTE[DAYS[i].d]; if(!r) continue;
+    for(let j=0;j<r.length-1;j++) past.add(key(r[j],r[j+1]));
+  }
+  const onNow=new Set();
+  if(R) for(let j=0;j<R.length-1;j++) onNow.add(key(R[j],R[j+1]));
+  MSEG.forEach(([a,b,k])=>{
+    const cls='mseg'+(k?' '+k:'')+((past.has(key(a,b))&&!onNow.has(key(a,b)))?' past':'');
+    segs+=`<line class="${cls}" x1="${MP[a].x}" y1="${MP[a].y}" x2="${MP[b].x}" y2="${MP[b].y}"/>`;
   });
-  const cap = R&&R.length>1 ? `粗線為今日路線：${R.join(' → ')}` :
+  if(R&&R.length>1){
+    const p=R.map(n=>MP[n].x+','+MP[n].y).join(' ');
+    now=`<polyline class="mnowh" points="${p}"/><polyline class="mnow" points="${p}"/>`;
+  }
+  // 脈動環依行進順序延遲觸發，順便帶出方向感
+  if(R) R.forEach((n,idx)=>{
+    if(R.indexOf(n)!==idx) return;
+    ping+=`<circle class="mping" cx="${MP[n].x}" cy="${MP[n].y}" r="23" style="animation-delay:${(idx*0.22).toFixed(2)}s"/>`;
+  });
+  Object.entries(MP).forEach(([n,P])=>{
+    const on=!!(R&&R.includes(n));
+    if(P.k===2) pts+=`<circle class="mring ebc" cx="${P.x}" cy="${P.y}" r="17"/>`;
+    if(on)      pts+=`<circle class="mring" cx="${P.x}" cy="${P.y}" r="23"/>`;
+    const r=P.k===2?7.5:(P.k?(on?7.5:6):(on?5.5:4.5));
+    if(n==='貢嘎機場') pts+=`<g transform="translate(${P.x},${P.y}) rotate(45)"><rect class="mpt" x="-5" y="-5" width="10" height="10"/></g>`;
+    else pts+=`<circle class="mpt${P.k?' stay':''}${on?' on':''}" cx="${P.x}" cy="${P.y}" r="${r}"/>`;
+    lbls+=`<text class="mlbl${on?'':(P.k?' stay':' dim')}" x="${P.x+P.dx}" y="${P.y+P.dy}" text-anchor="${P.an}">${n}</text>`;
+  });
+  const cap = R&&R.length>1 ? `紅線為今日路線：${R.join(' → ')}　淡色為已走過的路段` :
               (R&&R.length===1 ? `今日停留：${R[0]}` :
-               '實心點為過夜地，空心點為當日停留，虛線為拉日鐵路。縱向已放大約 2 倍以便閱讀。');
+               '實心點為過夜地，空心點為當日停留，菱形為機場，點狀虛線為拉日鐵路。縱向已放大約 2 倍以便閱讀。');
   const open = store.get('mapOpen')!=='0';
   return `<details class="mapd" id="mapd"${open?' open':''}>
     <summary>西藏移動路線<span class="sn">可收合</span></summary>
     <div class="dbody"><svg viewBox="0 0 1000 880" preserveAspectRatio="xMidYMid meet" role="img" aria-label="西藏陸路移動路線示意圖">
-    ${MSTATIC}${segs}${now}${pts}${lbls}</svg><p class="cap">${cap}</p></div></details>`;
+    <defs><filter id="mgrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs>
+    ${MSTATIC}${segs}${now}${ping}${pts}${lbls}${MDECOR}</svg><p class="cap">${cap}</p></div></details>`;
 }
 
 /* ═══ 日期 ═══ */
@@ -842,8 +926,9 @@ function viewMove(){
     ln:[['陸路','9/4 日喀則 → 拉薩走<b>拉日鐵路</b>約 2 小時 20 分　·　9/5 納木措為 9 人座包車'],
         ['行程','逐日內容見「行程」分頁']]},
    {c:'tour',node:'wait',d:'9/7（一）· <em>3,650m</em>',t:'拉薩 → 貢嘎機場',
-    data:'團方送機 · 航廈 <b>T3</b>',pill:['wait','待確認'],
-    ln:[['陸路','酒店在堆龍德慶區，車程約 1 小時；出發時間需 Kira 確認']]},
+    data:'團方送機 · 航廈 <b>T3</b>',pill:['wait','當地確認'],
+    ln:[['陸路','酒店在堆龍德慶區，車程約 1 小時'],
+        ['時間','Kira 回覆：到當地與導遊討論後決定。<b>D11（9/6）晚上先問好隔天幾點出發</b>','key']]},
    {c:'self shift',node:'',d:'9/7（一）· D12 · <em>→ 500m</em>',t:'貢嘎 → 成都',
     data:'<b>3U8686</b> 11:00 LXA(T3) → 13:10 CTU雙流(T1)',pill:['ok','已出票'],
     ln:[['住宿','太古里城際酒店 · 午後與晚上為成都自由時間']]},
@@ -878,7 +963,7 @@ function viewStay(){
 function viewMemo(){
   let h='';
 
-  h+=`<details class="sos" id="dt-sos" open><summary>緊急處置<span class="sn">先讀這個</span></summary><div class="dbody">
+  h+=`<details class="sos" id="dt-sos"><summary>緊急處置<span class="sn">先讀這個</span></summary><div class="dbody">
     <div class="panel"><h4>唯一確定有效的處置</h4>
       <ol class="steps">
         <li class="first"><b>立即下降海拔。</b>不是吸氧、不是加藥、不是休息一晚看看。下降 500–1,000m 通常就有明顯改善。</li>
@@ -918,7 +1003,7 @@ function viewMemo(){
       <p class="note">這些只是適應後的常見範圍，個人差異很大。<b>重點是趨勢與症狀併看</b>——休息狀態下持續往下掉，或數值偏低又同時頭痛、喘不過氣，才是警訊。單看一個低數字沒有意義，數字漂亮但走不直更危險。出發前先在台灣量一次基準值。</p>
     </div></div></details>`;
 
-  h+=`<details><summary>尚待確認<span class="sn">${TODOS.length} 項</span></summary><div class="dbody">${
+  h+=`<details id="dt-todo"><summary>尚待確認<span class="sn">${TODOS.length} 項</span></summary><div class="dbody">${
     TODOS.map(t=>`<div class="todo"><div class="todo-t">${t.t}</div><div class="todo-n">${t.n}</div><span class="todo-w">${t.w}</span></div>`).join('')
   }</div></details>`;
 
